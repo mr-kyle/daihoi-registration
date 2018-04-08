@@ -1,0 +1,56 @@
+
+    #rego-form.shepherd-active > * {
+      -webkit-transition: opacity 0.4s;
+       transition: opacity 0.4s; 
+       opacity: 0.5; 
+       pointer-events: none;
+
+    }
+
+    
+
+
+
+    #rego-form.shepherd-hilite > *,
+    #rego-form .shepherd-target.shepherd-enabled {
+        opacity: 1 !important;
+        pointer-events: auto !important; 
+        -webkit-box-shadow: 0 0 15px 15px #FF3030;
+        box-shadow: 0 0 15px 15px #FF3030;
+        border:1px solid red;
+        background-color: pink;
+    }
+
+
+        .shepherd-content header{
+            background-color:#222 !important;
+            color:#fff !important;
+        }
+
+
+
+        .shepherd-content header a.shepherd-cancel-link{
+            color:cyan !important;
+        }
+
+        .shepherd-content{
+            background-color:#444 !important;
+            color:#D2D1D1 !important;
+
+        }    
+
+
+
+    @media (max-width: 640px) {
+        .shepherd-element {
+
+            width: 75% !important;
+
+            font-size: 0.85em !important;
+
+            left: 10%/100px !important;
+
+        }
+
+    }
+        

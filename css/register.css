@@ -1,0 +1,338 @@
+
+
+        .navbar-brand img {
+            width: 30px;
+            height: 30px;
+            margin-top: -7px;
+        }
+
+        .navbar-nav li a {
+            font-size: 1.2em !important;    
+        }
+
+        input.form-control:focus, select.form-control:focus, textarea.form-control:focus {
+            border-bottom: 3px solid steelblue  !important;
+        }
+
+      
+        table.table td {font-size:small !important;}
+
+        table.table thead {
+            font-size: small !important;
+        }
+
+        table.table caption {
+            font-size: small !important;
+        } 
+
+
+        .input-group .input-group-addon {
+            background:#333;
+            color:white;
+        }
+
+    
+        
+        .form-inline .form-group {
+            padding-top: 8px !important;
+        }
+
+        .line-total {
+            min-width: 90px;
+            /*background: #275b11 !important;*/
+        }
+
+        .checkbox label {
+            font-size:small;
+        }
+
+   
+        ul.country-list li.country{
+            color:#333 !important;
+            font-size:90%;
+
+        }
+
+        .force-show {
+            display: inline-block !important;
+        }
+
+
+        
+        .well-offset-color {
+            border: 1px solid #000 !important;
+            /*background-color: #2b3e50 !important;*/
+            min-height: 350px !important;
+            border-radius: 0px;
+
+        }
+            .well-offset-color table {
+                border-color: #637A90;
+            }
+
+            .well-offset-color table td {
+                /* font-size: 100% !important; */
+            }
+
+                .well-offset-color table caption {
+                    font-size: 150% !important;
+                    color: rgb(14, 41, 83);
+                }
+
+
+        #rego-summary {
+            display:none;
+        } 
+        #rego-summary div.well { 
+            background-color: #213244;
+            color:white;
+        }
+
+        #rego-summary .white {
+            background-color: #fff !important;
+            color: inherit !important;
+            border: none !important;
+        }        
+        
+
+            #rego-summary table caption {
+                font-size: 150% !important;
+            }
+
+            table.table-last-col-right td:last-child, 
+            table.table-last-col-right th:last-child{
+                text-align:right;
+            } 
+
+        #rego-summary .label-summary-total {
+            font-size:100%;    
+        } 
+            
+
+        #rego-summary table td, #rego-summary table th {
+            border:none !important;
+        }
+
+
+        #payment-summary .panel-default {
+            background-color: #213244 !important;
+            color:white;
+        }
+
+        #payment-summary .panel{
+            border-radius: 10px !important;
+
+        }
+
+        
+
+
+        #payment-summary table {
+            /*border-color:#637A90;*/
+        }
+        
+        #payment-summary table caption {
+            color:#637A90;
+        }
+
+        #payment-summary .bank-info {
+            /*color:#213244;*/
+            color:white; 
+            background-color: #3C4C5A !important;
+            border-radius: 0px !important;            
+        }
+
+        #payment-summary .panel-footer {
+            background-color: transparent !important;
+            background-color: rgba(0,0,0,0) !important; 
+        }
+            
+
+        
+
+        div#summary-content table, 
+        div#summary-content .panel-body table {
+            border-top: 1px solid #DF691A !important;
+            border-collapse: initial;
+            border-spacing: 2px;
+            border: none;
+        }
+
+        div#summary-content table caption {
+            color: #CAAB71;
+        }
+
+        div#summary-content table tbody tr {
+            background-color: #3C4C5A;
+        }
+
+        div#summary-content .panel-body table tbody tr {
+            background-color: #3C4C5A;
+        }
+
+
+        /* strike strikeout  */
+        tr.strikeout td { position: relative; font-style: italic; opacity: 0.5;}
+
+        tr.strikeout td:before {
+          content: " ";
+          position: absolute;
+          top: 50%;
+          left: 0;
+          border-bottom: 2px solid maroon;
+          width: 100%;
+        }
+
+
+
+        /* 2018  ADJUSTMENTS */
+        .panel {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
+            border:none !important; 
+        }
+        .panel-heading {border-radius: 0px; }
+        .border-none {border:none !important; }
+        .border-none > .panel-heading {border:none !important;}
+
+        textarea { border-radius: 0px !important;}
+        input[type=text],input[type=email], input[type=number], select{
+            border:none !important;
+            border-bottom: 1px solid #eaeaea !important;
+            border-radius: 0px !important;
+            box-shadow: none !important;
+            background-color: transparent  !important;
+        }
+        .checkbox.form-control {
+            border:none !important;
+            border-bottom: 1px solid #eaeaea !important;
+            border-radius: 0px !important;
+            box-shadow: none !important; 
+            background-color: transparent !important;
+        }
+
+
+        h1 { color: maroon;}
+
+        .form-bg {background: #fafafa;}
+        
+        .padding {padding:20px;}
+
+        .bordered { border:1px solid #a5a5a5; }
+
+        .white-bg { background-color: white !important;}
+
+        
+
+
+        .other-registrants::before {
+            background: #333;
+            position: relative;
+            top:-10px;
+            left:-10px;
+            color:white;
+            font-weight: bold;
+            padding:2px 5px;
+            font-size: 0.8em; 
+            visibility: hidden;
+        }
+        .other-registrants:nth-child(1)::before{content: "1."; visibility: visible;}
+        .other-registrants:nth-child(2)::before{content: "2.";visibility: visible; top:0px;}
+        .other-registrants:nth-child(3)::before{content: "3."; visibility: visible;}
+        .other-registrants:nth-child(4)::before{content: "4.";visibility: visible; top:0px;}
+        .other-registrants:nth-child(5)::before{content: "5."; visibility: visible;}
+        .other-registrants:nth-child(6)::before{content: "6.";visibility: visible; top:0px;}
+        .other-registrants:nth-child(7)::before{content: "7."; visibility: visible;}
+        .other-registrants:nth-child(8)::before{content: "8.";visibility: visible; top:0px;}
+        .other-registrants:nth-child(9)::before{content: "9."; visibility: visible;}
+        .other-registrants:nth-child(10)::before{content: "10.";visibility: visible; top:0px;}
+        .other-registrants:nth-child(11)::before{content: "11."; visibility: visible;}
+        .other-registrants:nth-child(12)::before{content: "12.";visibility: visible; top:0px;}
+        .other-registrants:nth-child(13)::before{content: "13."; visibility: visible;}
+        .other-registrants:nth-child(14)::before{content: "14.";visibility: visible; top:0px;}        
+
+        .other-registrants {
+            padding:10px 0px 20px 10px;
+            border-top: 1px solid #fafafa;
+            background: #f5f5f5;
+        }
+
+        .row.other-registrants:nth-child(even) {background: #fff !important;}
+        .row.other-registrants:nth-child(2n) {background: #fff !important;}
+       
+        .early-bird {
+            background-color: #333;
+            color:white;
+        }
+        .standard-price {
+            background-color: #ccc;
+            
+        }
+        .text-bold { font-weight: bold;}
+
+
+        /* // Medium devices (tablets, 768px and up) */
+        @media (max-width: 768px) { 
+            .btn-remove-row {
+                width:100% !important;
+            }            
+            .btn-remove-row span {
+                visibility: hidden;
+            }                
+            .btn-remove-row span::before {
+                content: " REMOVE REGISTRANT";
+                visibility: visible;
+            }
+        }
+
+
+        /* VALIDATION ERRORS */
+        input.validate-error {
+            background: rgb(251, 221, 226) !important;
+            
+        }
+        label.validate-error {
+            color: #FF8B8B;
+            font-weight: normal !important;
+        }
+
+
+/*CALLOUT STYLE*/        
+
+
+.fixed-top {
+     position: fixed;
+     top: 0px;
+     left: 17.5%;
+     width: 70%;
+     z-index: 1100;
+}
+
+
+@media (max-width: 640px) { 
+    .fixed-top {
+        left: 5%;
+        width: 96%;
+    }
+}
+
+
+@media (min-width: 1200px) { 
+    .fixed-top {
+        left: 25%;
+        width: 50%;
+    }
+}
+
+
+.transparent {background-color: transparent;}
+.no-radius {
+    border-radius: 0;
+}
+
+
+
+#callout {display: none; width: 98%; margin: 0 auto;}
+
+

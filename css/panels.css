@@ -1,0 +1,156 @@
+
+/* PANEL COLOURS */
+
+/*Panels (Portlets)
+------------------------------------*/
+/*.panel,
+.panel-heading,
+.panel-group .panel {
+  border-radius: 0;
+}
+
+.panel-heading {
+  color: #fff;  
+  padding: 5px 15px;
+}*/
+
+/*Panel Table*/
+.panel .table {
+  margin-bottom: 0;
+}
+
+/*Panel Unify*/
+.panel-u {
+   border-color: #72c02c;
+}
+
+.panel-u > .panel-heading {
+   background: #72c02c;
+}
+
+/*Panel Blue*/
+.panel-blue {
+   border-color: #3498db;
+}
+
+.panel-blue > .panel-heading {
+   background: #3498db;
+}
+
+/*Panel Red*/
+.panel-red {
+   border-color: #e74c3c;
+}
+
+.panel-red > .panel-heading {
+   background: #e74c3c;
+}
+
+/*Panel Green*/
+.panel-green {
+   border-color: #2ecc71;
+}
+
+.panel-green > .panel-heading {
+   background: #2ecc71;
+}
+
+/*Panel Sea*/
+.panel-sea {
+   border-color: #1abc9c;
+}
+
+.panel-sea > .panel-heading {
+   background: #1abc9c;
+}
+
+/*Panel Orange*/
+.panel-orange {
+   border-color: #e67e22;
+}
+
+.panel-orange > .panel-heading {
+   background: #e67e22;
+}
+
+/*Panel Yellow*/
+.panel-yellow {
+    border-color: #f1c40f;
+}
+
+.panel-yellow > .panel-heading {
+     background: #f1c40f;
+}
+
+/*Panel Grey*/
+.panel-grey {
+   border-color: #95a5a6;
+}
+
+.panel-grey > .panel-heading {
+   background: #95a5a6;
+}
+
+/*Panel Dark*/
+.panel-dark {
+   border-color: #555;
+}
+
+.panel-dark > .panel-heading {
+   background: #555;
+}
+
+/*Panel Purple*/
+.panel-purple {
+   border-color: #9b6bcc;
+}
+
+.panel-purple > .panel-heading {
+   background: #9b6bcc;
+}
+
+/*Panel Aqua*/
+.panel-aqua {
+   border-color: #27d7e7;
+}
+
+.panel-aqua > .panel-heading {
+   background: #27d7e7;
+}
+
+/*Panel Brown*/
+.panel-brown {
+   border-color: #9c8061;
+}
+
+.panel-brown > .panel-heading {
+   background: #9c8061;
+}
+
+/*Panel Dark Blue*/
+.panel-dark-blue {
+   border-color: #4765a0;
+}
+
+.panel-dark-blue > .panel-heading {
+   background: #4765a0;
+}
+
+/*Panel Light Green*/
+.panel-light-green {
+   border-color: #79d5b3;
+}
+
+.panel-light-green > .panel-heading {
+   background: #79d5b3;
+}
+
+/*Panel Default Dark*/
+.panel-default-dark {
+   border-color: #585f69;
+}
+
+.panel-default-dark > .panel-heading {
+   background: #585f69;
+}
+

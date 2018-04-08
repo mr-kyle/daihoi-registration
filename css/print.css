@@ -1,0 +1,65 @@
+	@media print
+	{    
+	    .no-print, .no-print *
+	    {
+	        display: none !important;
+	    }
+
+        .print-only, .print-only *
+        {
+            display: block !important;
+        }
+
+        a[href]:after {
+            content: none !important;
+        }
+
+
+        #rego-summary {
+            background-color: #fff !important;
+        }
+
+        #rego-summary td, 
+        #rego-summary div, 
+        #rego-summary p, 
+        #rego-summary li {
+            color:#000;
+        }
+
+        #payment-summary .panel-default {
+            background-color: #fff !important;
+        }         
+
+        #rego-summary .well {
+            background-color: #fff !important;
+            color:black;
+        }
+
+
+	}
+
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+
+
+    .print-only, .print-only *
+    {
+        display: block !important;
+    }
+
+
+      a[href]:after {
+        content: none !important;
+      }
+
+
+        #payment-summary .panel-default {
+            background-color: #f5f5f5 !important;
+            
+        } 
+
+    #rego-summary {
+        background-color: #f5f5f5 !important;
+    }

@@ -1,0 +1,5 @@
+includes/_cAppKeys.php
+scripts/db-data.sql
+*.settings
+*.pdf
+db-admin/.htaccess

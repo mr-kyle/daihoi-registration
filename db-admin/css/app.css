@@ -1,0 +1,122 @@
+ body {
+     padding:0;
+     margin: 0;
+     font-family: Arial;
+     font-size: 12px;
+     background-color: #f3f5f6;
+     color: #333;
+}
+ a {
+    color:#df691a;
+}
+ .currency {
+     text-align: right;
+}
+/* MENU */
+ .title-bar {
+     background: #333;
+     padding: 0.9rem;
+}
+ .top-bar {
+     background: #333;
+}
+ .top-bar ul {
+     background: #333;
+}
+ .top-bar ul li {
+     background: #333;
+}
+ .top-bar ul li a {
+     color: #fff;
+}
+ .menu-text {
+     color: #fff;
+}
+
+ ul.menu li[role="menuitem"] a:hover {
+  background-color: #555;
+  border-radius: 5px;
+ }
+
+ @media only screen and (max-width: 40em) {
+     .menu-text {
+         display: none !important;
+    }
+}
+ @media only screen and (min-width: 40em) {
+     .top-bar .menu:last-child {
+         border-left: 1px solid #4e4e4e;
+    }
+     .top-bar .menu:first-child {
+         border-left: none;
+    }
+     .top-bar .menu li:not(:last-child) {
+         border-right: 1px solid #4e4e4e;
+    }
+}
+ .dropdown.menu .submenu {
+     border: none;
+}
+ .dropdown.menu .is-dropdown-submenu-parent.is-right-arrow > a::after {
+     border-color: #fff transparent transparent;
+}
+ .is-drilldown-submenu-parent > a::after {
+     border-color: transparent transparent transparent #fff;
+}
+ .js-drilldown-back::before {
+     border-color: transparent #fff transparent transparent;
+}
+/* FOOTER */
+ footer {
+     margin-top: 50px;
+     border-top: 1px solid #ebebeb;
+     padding-top: 20px;
+}
+/* DETAILS PAGE */
+ .details table {
+     border-collapse:collapse;
+     margin-bottom: 30px;
+}
+ .details table thead th {
+     font-weight: bold;
+     background-color: #2b3e50;
+     color: #f5f5f5;
+     padding:8px;
+}
+ .details table#details-table td {
+     background-color: #333;
+     color: #fff;
+     padding:8px;
+}
+ .details table#details-table tbody tr:hover {
+     background-color: #f5f5f5 !important;
+     color: #333;
+}
+ .details table tbody td label {
+     color: #fff;
+}
+ .details h4 {
+     border-bottom: 2px solid orange;
+     padding-bottom: 5px;
+     margin-bottom: 20px;
+}
+ .fixed-top {
+     position: fixed;
+     top: 0px;
+     left: 25%;
+     width: 50%;
+}
+/* strike strikeout */
+ tr.strikeout td {
+     position: relative;
+     font-style: italic;
+}
+ tr.strikeout td:before {
+     content: " ";
+     position: absolute;
+     top: 50%;
+     left: 0;
+     border-bottom: 2px solid maroon;
+     width: 100%;
+}
+ 

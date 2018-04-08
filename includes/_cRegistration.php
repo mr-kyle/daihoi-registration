@@ -337,7 +337,7 @@
 					
 					$this->Phone           = trim($rego['Phone']);
 					
-					$this->Airbed          = ($rego['Airbed'] == '' ? 0 : $rego['Airbed']);
+					$this->Airbed          = 0; //($rego['Airbed'] == '' ? 0 : $rego['Airbed']);
 					
 					$this->AirportTransfer = ($rego['AirportTransfer'] == '' ? 0 : $rego['AirportTransfer']);
 					
@@ -372,7 +372,7 @@
 
 						$newPerson->FamilyDiscount  = $member['DiscountFamily'];
 
-						$newPerson->Airbed          = ($member['Airbed'] == '' ? 0 : $member['Airbed']);
+						$newPerson->Airbed          = 0; //($member['Airbed'] == '' ? 0 : $member['Airbed']);
 
 						$newPerson->AirportTransfer = ($member['AirportTransfer'] == '' ? 0 : $member['AirportTransfer']);
 
@@ -924,8 +924,8 @@
 						R.FamilyDiscount RFamilyDiscount, R.AirportTransfer RAirportTransfer, R.Fee RFee, R.Gender RGender, R.Role RRole, 
 						R.Cancelled RCancelled, IFNULL((SELECT SUM(P.PaidAmount) FROM Payment P WHERE P.MainContactId = C.MainContactId),0) TotalPaid, 
 						R.Pensioner RPensioner FROM MainContact C LEFT OUTER JOIN MainContact R ON R.GroupLeaderMainContactId=C.MainContactId 
-						WHERE R.GroupLeaderMainContactId > 0 OR C.GroupLeaderMainContactId IS NULL AND C.Reference ='" . $ref . "';")){
-
+						WHERE  C.Reference ='" . $ref . "';")){ 
+							//R.GroupLeaderMainContactId > 0 OR C.GroupLeaderMainContactId IS NULL AND
 							//holds value for all rego cancelled
 							$cancellationCounter = 0;
 							$regoCounter = 0;
@@ -986,7 +986,7 @@
 
 												$this->Phone           = $row['Phone'];
 
-												$this->Airbed          = $row['Airbed'];
+												$this->Airbed          = 0; //$row['Airbed'];
 
 												$this->AirportTransfer = $row['AirportTransfer'];
 
@@ -1046,7 +1046,7 @@
 
 											$newPerson->FamilyDiscount  = $row['RFamilyDiscount'];
 
-											$newPerson->Airbed          = $row['RAirBed'];
+											$newPerson->Airbed          = 0; //$row['RAirBed'];
 
 											$newPerson->AirportTransfer = $row['RAirportTransfer'];
 

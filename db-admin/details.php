@@ -3,666 +3,37 @@
 error_reporting(E_ALL & ~E_NOTICE);
 ?>
 <!doctype html>
-
 <html class="no-js" lang="en">
-
 <head>
-
-
-
     <?php require '_scripts.php' ?>
-
 	<link rel="stylesheet" href="css/responsive-tables.css">
-
     <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-
 	<title>Registration Details</title>
-
-	<style type="text/css">
-
-
-
-		ul.details-list { list-style-type: none; }
-
-		ul.details-list li { margin-bottom: 6px; }
-
-		ul.details-list li i {width: 24px; font-size: 125%;}
-/*
-
-		#details-table label { display: inline; }
-
-
-
-		#details-table td span.inside-row-fix {
-
-			width: inherit !important;
-
-		    margin-top: 40px;
-
-		    vertical-align: baseline;
-
-		    padding-top: 3px;
-
-		}
-
-
-
-		#details-table input.payment-amount {
-
-		    color: #fff;
-
-		    width: 80px;
-
-		    display: inline-block;
-
-		    font-size: 120%;
-
-		    padding: 5px;
-
-		    height: 30px;
-
-		    background-color: #333;
-
-		    border: 1px solid #444;
-
-		    margin-bottom: 0;
-
-		    text-align: right;
-
-		}
-
-
-
-		#details-table input.payment-amount:focus {
-
-		    color: #333 !important;
-
-		    background-color: #eee;
-
-		}		
-
-
-
-		#details-table input.paid{
-
-			background-color: #027302;
-
-		}*/
-
-		div.switch {
-			float: left;
-			margin-bottom: 0;
-		}
-
-		#outstanding-balance { width: 100%; text-align: center; }
-		#outstanding-balance .label {padding: 10px !important; width: 100%}
-		#outstanding-balance .label wanring {color:#777;}
-
-	</style>
-
-
-
-
-
-
-
-	<script type="text/javascript">
-
-
-
-
-	    var PAYLOAD = function () {
-
-			this.type    = "",
-
-			this.id      = 0,
-
-			this.checkin = 0,
-
-			this.paid    = 0
-
-	    }
-
-
-
-	    var PAYMENT = function () {
-
-			this.type    = "",
-
-			this.id      = 0,
-
-			this.amount  = 0,
-
-			this.comments  = '',			
-
-			this.date    = null
-
-	    }
-
-
-
-
-
-	    function makePayment(){
-
-			$("#callout-success").hide();
-
-			$("#callout-alert").hide();
-
-			
-
-			var payment    = new PAYMENT();
-
-			payment.date   = document.getElementById("txtPaymentDate").value;
-
-			payment.amount = parseFloat(document.getElementById("txtPaymentAmount").value);
-
-			payment.id     = <?php echo $_GET['id']; ?>;
-
-			payment.comments = document.getElementById("txtPaymentComments").value;
-
-			if (payment.amount == "" || isNaN(payment.amount)){
-				alert("Please enter an amount.");
-				return false;
-			}				
-
-
-			$("#json").html(JSON.stringify(payment));
-
-
-			$.ajax({
-
-				url: 'action.php?type=add-payment&cache=' + Math.random(),
-
-				type: 'POST',
-
-				dataType: 'json',
-
-				data: {id: payment.id, json: JSON.stringify(payment)},
-
-			})
-
-			.done(function(data) {
-
-				if (data.status == 1){
-
-					$("#callout-success").slideDown();
-
-					getPayments();
-
-				}else{
-
-					$("#callout-alert").slideDown().find("p:first").text(data.message);
-
-				}
-
-				console.log("success");
-
-			})
-
-			.fail(function(jqXHR) {
-
-				$("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
-
-				console.log("error");
-
-			})
-
-			.always(function() {
-
-				console.log("complete");
-
-			});
-
-	    }
-
-
-
-		function getJSON(){
-
-
-
-			$("#callout-success").hide();
-
-			$("#callout-alert").hide();
-
-
-
-			var json = []; 
-
-			var payload;
-
-			var exit = false;
-
-
-
-			//at this stage, becuase of the responsive nature of the table, the target table can be created twice when in a smaller view
-
-			//therefore we check if there are 2 tables of the same id, if so, get the first table. If not then use the just query as per normal.
-
-
-
-			var tables = $("#details-table");
-
-			if (tables.length > 1){
-
-				tables = tables.first();
-
-			}
-
-
-
-
-
-	        $(tables).find("td.row-actions").each(function (index, el) {
-
-
-
-				//create payload and assign attributes		        	
-
-				payload         = new PAYLOAD();
-
-				payload.type    = $(el).data("type");
-
-				payload.id      = $(el).data("id");
-
-				payload.checkin = $(el).find('input[type=checkbox]:first').prop("checked");
-
-
-				// var paymentField = $(el).find('input[type=number]:first');
-				// payload.paid    = paymentField.val();
-
-				// //some validation
-				// var max = paymentField.prop("max");
-				// if ( parseInt(payload.paid) > parseInt(max) ){
-				// 	$("#callout-alert").slideDown().find("p:first").text("You cannot pay more than the fee.");
-				// 	paymentField.focus().select();
-				// 	exit = true;
-				// 	return false;
-
-				// }
-
-
-
-	        	//add to json
-				json.push(payload);
-
-	        });
-
-
-
-	        if (exit) {
-
-	        	return false;
-
-	        }
-
-
-
-	        if (json !== "") {
-
-
-	        	$("#json").html(JSON.stringify(json));
-
-	        	//console.log(JSON.stringify(json));
-
-	        	sendData(JSON.stringify(json));
-
-	        }
-
-		}
-
-
-
-
-
-
-
-		function sendData(json){
-
-				$("#callout-alert").hide();
-
-				$("#callout-success").hide();
-
-
-
-				$.ajax({
-
-					url: 'action.php?cache=' + Math.random(),
-
-					type: 'POST',
-
-					dataType: 'json',
-
-					data: {json: json},
-
-				})
-
-				.done(function(data) {
-
-					if (data.status == 1){
-
-						$("#callout-success").slideDown();
-
-					}else{
-
-						$("#callout-alert").slideDown().find("p:first").text(data.message);
-
-					}
-
-					console.log("success");
-
-				})
-
-				.fail(function(jqXHR) {
-
-					$("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
-
-					console.log("error");
-
-				})
-
-				.always(function() {
-
-					console.log("complete");
-
-				});
-
-				
-
-
-
-		}
-
-
-
-
-
-		function addNotes(id){
-
-				$.ajax({
-
-					url: 'action.php?type=notes&cache=' + Math.random(),
-
-					type: 'POST',
-
-					dataType: 'json',
-
-					data: {id: id, notes: $("#txtNotes").val() },
-
-				})
-
-				.done(function(data) {
-
-					if (data.status == 1){
-
-						getNotes();
-
-					}else{
-
-						$("#callout-alert").slideDown().find("p:first").text(data.message);
-
-					}
-
-					console.log("success");
-
-				})
-
-				.fail(function(jqXHR) {
-
-					$("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
-
-					console.log("error");
-
-				})
-
-				.always(function() {
-
-					console.log("complete");
-
-				});
-
-
-
-		}
-
-
-
-
-
-		function getNotes(){
-
-				var id = <?php echo $_GET['id']; ?>;
-
-				if (id == "" || id < 0){
-
-					return false; 
-
-				}
-
-
-				$.ajax({
-
-					url: 'action.php?type=get-notes&cache=' + Math.random(),
-
-					type: 'GET',
-
-					dataType: 'json',
-
-					data: {id: id },
-
-				})
-
-				.done(function(data) {
-
-					if (data.status == 1){
-
-						$("#table-notes").html(data.html)
-
-					}
-
-
-
-					console.log("success");
-
-				})
-
-				.fail(function(jqXHR) {
-
-					$("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
-
-					console.log("error");
-
-				})
-
-				.always(function() {
-
-					console.log("complete");
-
-				});
-
-		}
-
-
-
-
-
-		function getPayments(){
-
-				var id = <?php echo $_GET['id']; ?>;
-
-				if (id == "" || id < 0){
-					return false; 
-				}
-
-
-
-				$.ajax({
-
-					url: 'action.php?type=get-payments&cache=' + Math.random(),
-					type: 'GET',
-					dataType: 'json',
-					data: {id: id },
-
-				})
-
-				.done(function(data) {
-
-					if (data.status == 1){
-
-						$("#table-payments").html(data.html);
-						$("#outstanding-balance").html(data.info);
-						createTT();
-					}
-
-					console.log("success");
-
-				})
-
-				.fail(function(jqXHR) {
-
-					$("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
-					console.log("error");
-
-				})
-
-				.always(function() {
-					console.log("complete");
-
-				});
-
-
-
-
-
-		}
-
-
-
-		function fillRegoPaymentAmounts(){
-
-			$("input[type=number].payment-amount").each(function (index, el) {
-				el.value = el.max;
-				$(this).trigger('change');
-	        });
-
-		}
-
-
-
-		function sendSMS(){
-
-				$("#callout-alert").hide();
-				$("#callout-success").hide();
-
-				$("#cSendSMS").addClass("disabled")
-				$("#cSendSMS").prop('disabled', true);
-
-				$.ajax({
-
-					url: 'action.php?type=sms&cache=' + Math.random(),
-					type: 'POST',
-					dataType: 'json',
-					data: {phone: $("li.phone").text(), ref: $("li.ref").text(), id: <?php echo trim($_GET["id"]) ?> },
-
-				})
-
-				.done(function(data) {
-					if (data.status == 1){
-						
-						setTimeout("getNotes()",250);
-						$("#callout-success").slideDown().find("p:first").text(data.message);
-
-
-					}else{
-						$("#callout-alert").slideDown().find("p:first").text(data.message);
-					}
-
-					console.log("success");
-
-				})
-
-				.fail(function(jqXHR) {
-					$("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
-					console.log("error");
-
-				})
-				.always(function() {
-					console.log("complete");
-					$('#smsModal').foundation('close');
-				});
-
-		}		
-
-		function enableSMSButton(){
-			$("#cSendSMS").removeClass("disabled")
-			$("#cSendSMS").prop('disabled', false);			
-		}
-
+	<script>
+		var REGO_ID = <?php echo $_GET['id']; ?>;	
 	</script>
-
-
-
 </head>
-
-
-
-
-
-
-
 <body>
-
-
-
 <?php require '_menu.php' ?>
 
 
     <div class="row">
-
-
       <div class="large-12 columns">
-
         <p>&nbsp;</p> 
-
       </div>
-
     </div>
 
 
  <div class="details">
 
-
-
 <?php
-
-
-
 	require '_db.php';
-
-
-
-
-
 	//holds the admin notes
-
 	$admin_notes = 'tt';
 
-
-
-
-
-	function ListRegos($id = 0, $firstRowMainContact = 1){
-
+	function ListRegos($id = 0){
 
 		$database = createDb();
-
-					//  <a href="#" title="mark as paid"><i class="fa fa-usd"> </i></a> | 
-
-					// <a href="#" title="mark as checked in"><i class="fa fa-check-circle-o"> </i></a> | 
-
-					// <a href="#" title="send confirmation email"><i class="fa fa-envelope-o"> </i></a>
-
 
 		$rowHtml = '
 			<tr class="%s">
@@ -677,7 +48,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 			              <span class="switch-inactive" aria-hidden="true">No</span>
 			            </label>
 			          </div>
-
 
 				</td>
 
@@ -700,23 +70,18 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 			</tr>';
 
+			$query = "SELECT * FROM MainContact M WHERE M.MainContactId = " . $id . " OR M.GroupLeaderMainContactId = " . $id . "  ORDER BY IFNULL(GroupLeaderMainContactId,0) ";
 
-			 $datas = $database->select("vAllRegos", "*" , [
-
-				"MainContactId" => $id
-
-			 ]);
-
+			$datas = $database->query($query)->fetchAll();	
 
 			$counter = 0;
-
 			$groupFees = 0;
 
-
 			foreach($datas as $row){
-
-
-				if ($counter == 0 ) {
+				$counter = $counter + 1;
+				
+				if ($counter == 1 ) {
+					
 
 					echo sprintf('	<div class="row">
 
@@ -741,7 +106,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 											<div class="medium-4 columns">
 
 												<ul class="details-list">
-													<!--<li title="Airbed"><i class="fa fa-bed"></i> %s</li>-->
 
 													<li title="Airport Transfer"><i class="fa fa-plane"></i> %s</li>
 
@@ -787,8 +151,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 								, $row["Church"]
 
-								, ToYesNo($row["Airbed"])
-
 								, ToYesNo($row["AirportTransfer"])
 
 								, ToYesNo($row["Pensioner"])
@@ -802,14 +164,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 								, $row["Comments"]
 
 								);
-
-
-
-
-
-
-
-
 
 
 
@@ -847,20 +201,17 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 										<tbody>';
 
+				}
 
 
-						if ($firstRowMainContact) {
+				if ($row["FullName"] != '') {
+					
 
-							//main contact
+					if ($row["Cancelled"] == false){
+						$groupFees += $row["Fee"];
+					}
 
-							$counter = $counter + 1;
-
-							if ($row["Cancelled"] == false){
-								$groupFees += $row["Fee"];
-							}
-
-
-							echo sprintf($rowHtml
+					echo sprintf($rowHtml
 
 								, ($row["Cancelled"]) ? 'strikeout' : ''
 
@@ -870,7 +221,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 								, $row["MainContactId"], $counter
 
-								, "mid"
+								, "id"
 
 								, $row["MainContactId"]
 
@@ -878,9 +229,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 								, $row["Age"]
 
-								, ""
+								, $row["Relation"]
 
-								, ""
+								, $row["FamilyDiscount"]
 
 								, ToYesNo($row["Pensioner"])
 
@@ -890,79 +241,27 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 								, $row["Fee"]
 
-								);							
+								);
 
-
-						}									
 
 
 				}
 
-
-
-
-					if ($row["RName"] != '') {
-
-						$counter = $counter + 1;
-
-						if ($row["RCancelled"] == false){
-							$groupFees += $row["RFee"];
-						}
-
-
-						echo sprintf($rowHtml
-
-									, ($row["RCancelled"]) ? 'strikeout' : ''
-
-									, "RegistrantId",  $row["RegistrantId"]
-
-									, $row["RegistrantId"], (($row["RCheckedIn"]) ? 'checked' : '')
-
-									, $row["RegistrantId"], $counter
-
-									, "rid"
-
-									, $row["RegistrantId"]
-
-									, $row["RName"]
-
-									, $row["RAge"]
-
-									, $row["RRelation"]
-
-									, $row["RFamilyDiscount"]
-
-									, ToYesNo($row["RPensioner"])
-
-									, ToYesNo($row["RAirportTransfer"])
-
-									, ToYesNo($row["RCancelled"])
-
-									, $row["RFee"]
-
-									);
-
-
-
-					}
-
-
+			
+				//next foreach
 			}
 
 
 
-				echo sprintf('<tfoot><tr>
+			echo sprintf('<tfoot><tr>
+					<td colspan="8">&nbsp;</td>
+					<td class="currency">$%01.2f</td></tr></tfoot>', 
+					$groupFees);
 
-									<td colspan="8">&nbsp;</td>
 
-									<td class="currency">$%01.2f</td></tr></tfoot>', $groupFees);
-
-
-				//terminate table
-
-				echo '</tbody></table>';
-
-				echo "</div></div>"; 
+			//terminate table
+			echo '</tbody></table>';
+			echo "</div></div>"; 
 
 
 	}
@@ -1098,7 +397,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 					  <div class="input-group-button">
 
-					    <input type="button" onclick="makePayment();" class="button" value="Add Payment" />
+					    <input type="button" onclick="makePayment(REGO_ID);" class="button" value="Add Payment" />
 
 					  </div>
 
@@ -1147,7 +446,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 		<div class="input-group-button">
 
-			<input type="button" onclick="addNotes(<?php echo $_GET['id']; ?>);" class="button round" value="Add Note" />
+			<input type="button" onclick="addNotes(REGO_ID);" class="button round" value="Add Note" />
 
 		</div>
 
@@ -1174,7 +473,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 		<div class="input-group-button">
 
-			<input type="button" id="cSendSMS" onclick="sendSMS();" class="button round" value="Send Status Update SMS" />
+			<input type="button" id="cSendSMS" onclick="sendSMS(REGO_ID);" class="button round" value="Send Status Update SMS" />
 
 		</div>
 
@@ -1200,7 +499,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 	<script type="text/javascript">
-
+		
 		function createTT(){
 			//$("#table-payments span.has-tip").each(function (index, el) {
 				//var tt = new Foundation.Tooltip('.has-tip');
@@ -1222,7 +521,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 		$(function(){
 
-			setTimeout("getNotes();getPayments();",100);
+			setTimeout("getNotes(REGO_ID);getPayments(REGO_ID);",100);
 
 
 			//set colour of the payment boxes

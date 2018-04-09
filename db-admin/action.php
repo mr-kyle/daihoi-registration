@@ -641,7 +641,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 		$runningTotal = 0;
 		if( count($datas) > 0){
 
-			$r->html .= '<tbody><thead><tr><th>&nbsp;</th><th>Date Entered</th><th>Payment Amount</th></tr></thead>';	
+			$r->html .= '<tbody><thead><tr><th>&nbsp;</th><th>Date Entered</th><th style="text-align:right">Payment Amount</th></tr></thead>';	
 
 			 foreach ($datas as $row) {
 
@@ -653,7 +653,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 				 if ($paymentVal != ""){
 				 	$counter += 1;
 				 	$runningTotal += $paymentVal;
-					$r->html .= sprintf('<tr><td>%d) %s</td><td>%s</td><td style="text-align:right; padding-right:10px !important;" class="payment-amounts">$%s</td></tr>', 
+					$r->html .= sprintf('<tr><td>%d) %s</td><td>%s</td><td style="text-align:right; padding-right:10px !important;" class="payment-amounts">%s</td></tr>', 
 						$counter, $notes,
 						$row["DateEntered"], 
 						money_format('%#0n', $paymentVal));	 
@@ -661,7 +661,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 			 }
 
-			 $r->html .= sprintf('<tfoot><tr><td colspan="3"  style="text-align:right; padding-right:10px;">$%s</td></tr></tfoot>',  money_format('%#0n', $runningTotal));
+			 $r->html .= sprintf('<tfoot><tr><td colspan="3"  style="text-align:right; padding-right:10px;">%s</td></tr></tfoot>',  money_format('%#0n', $runningTotal));
 
 			$outstanding = (($total + $total2) - $runningTotal );
 

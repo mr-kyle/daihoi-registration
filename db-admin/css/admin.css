@@ -120,3 +120,45 @@
      width: 100%;
 }
  
+
+/*FRONT PAGE*/
+.search-header {
+    color: #ebebeb;
+    background-color: #4E5D6C;
+    padding: 6px;
+    text-align: center;
+    padding:5px;
+}
+
+div.panel-stats {
+    background-color: #eee;
+    padding: 10px 5px 10px 5px ;
+    margin: 5px;
+    height: 55px;
+    text-align: center;
+    /*line-height: 20px;*/
+    border-radius: 5px;
+}
+
+#next20 { display: none; }
+#next20 li {
+    margin-bottom: 15px;
+}
+
+/*DETAILS PAGE*/
+
+
+ul.details-list { list-style-type: none; }
+
+ul.details-list li { margin-bottom: 6px; }
+
+ul.details-list li i {width: 24px; font-size: 125%;}
+
+div.switch {
+    float: left;
+    margin-bottom: 0;
+}
+
+#outstanding-balance { width: 100%; text-align: center; }
+#outstanding-balance .label {padding: 10px !important; width: 100%}
+#outstanding-balance .label wanring {color:#777;}

@@ -25,8 +25,7 @@ error_reporting(E_ALL & ~E_NOTICE);
   */
   
   //init the variables
-	$MainContactId  = $_GET["mid"];
-	$RegistrantId   = $_GET["rid"];
+	$MainContactId  = $_GET["id"]; 
 	$IsMainContact  = true;
 	$IsDisabledHtml = '';
 	$IsCancelled    = false;
@@ -36,41 +35,14 @@ error_reporting(E_ALL & ~E_NOTICE);
 	$database = createDb();
 
   //the sql formation
-  if ($MainContactId == ""){
-     $datas = $database->select("Registrant", 
-      ['[><]MainContact' => 'MainContactId'],
-      [
-      "Registrant.FullName",
-      "Registrant.Firstname",
-      "Registrant.Surname",
-      "Registrant.Age",
-      "Registrant.Role",
-      "Registrant.FamilyDiscount",
-      "Registrant.Relation",
-      "Registrant.Airbed",
-      "Registrant.AirportTransfer",
-      "Registrant.Gender",
-      "Registrant.Fee",
-      "Registrant.Cancelled",
-      "MainContact.Church",
-      "Registrant.Pensioner",
-      "Registrant.EarlyBirdSpecial"      
-      ], 
-      ["Registrant.RegistrantId" => $RegistrantId]
-      );
+  $query = "SELECT *,  IFNULL(GroupLeaderMainContactId,0) GroupLeader FROM MainContact M WHERE M.MainContactId = " . $MainContactId;
 
-      $IsMainContact = false;
-
-  }else{
-
-      $datas = $database->select("MainContact", "*" , [
-        "MainContactId" => $MainContactId
-      ]);
-
-  }
+  $datas = $database->query($query)->fetchAll();	
 
 	$row = $datas[0];
-	$IsCancelled = $row['Cancelled'];
+  $IsCancelled = $row['Cancelled'];
+  $IsMainContact = ($row['GroupLeader'] == 0);
+  
 	if ($row['Cancelled']){
 		$IsDisabledHtml = ' disabled="disabled" ';
 	}
@@ -334,7 +306,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
            $data = $database->select("AuditLog", ['ChangeText','DateTime'],[
             "AND" => [
-                "Id"            => $RegistrantId,
+                "Id"            => $MainContactId,
                 "AuditLog.Type" => "R"
               ],
               ["ORDER" => "DateTime"]
@@ -509,7 +481,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	        $("#json").html(JSON.stringify(r)).show();
 
-	        sendData(JSON.stringify(r), <?php echo ($RegistrantId == "") ? 0 : $RegistrantId ; ?>, "update-registrant");
+	        //sendData(JSON.stringify(r), <?php echo ($RegistrantId == "") ? 0 : $RegistrantId ; ?>, "update-registrant");
 	    }
 
 	    function getMainContact(){

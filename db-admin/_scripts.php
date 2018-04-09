@@ -1,13 +1,10 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<link rel="stylesheet" href="css/foundation.css" />
-	<link rel="stylesheet" href="css/app.css" />
+	<link rel="stylesheet" href="css/admin.css" />
 	<link rel="stylesheet" type="text/css"	href="DataTables/datatables.min.css"/>
-
 	<script src="js/vendor/jquery.min.js"></script>
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
-
-
 	<?php 
 		/*
 		//restict site usage by ip

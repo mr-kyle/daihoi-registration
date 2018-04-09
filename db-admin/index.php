@@ -2,113 +2,12 @@
 // Report all errors except E_NOTICE
 error_reporting(E_ALL & ~E_NOTICE);
 ?>
-
-
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
 	<title>Registration Dashboard</title>
 	<?php require '_scripts.php' ?>
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
-
-	<style type="text/css">
-		.search-header {
-		    color: #ebebeb;
-		    background-color: #4E5D6C;
-		    padding: 6px;
-		    text-align: center;
-		    padding:5px;
-		}
-
-		div.panel-stats {
-		    background-color: #eee;
-		    padding: 10px 5px 10px 5px ;
-		    margin: 5px;
-		    height: 55px;
-		    text-align: center;
-		    /*line-height: 20px;*/
-		    border-radius: 5px;
-		}
-
-		#next20 { display: none; }
-		#next20 li {
-			margin-bottom: 15px;
-		}
-	</style>
-	
-	<script type="text/javascript">
-
-
-		function doSearch() {
-
-			$("#warningAlert").hide();
-
-			var search 	= document.getElementById('tSearch').value;
-			var type 	= $("#searchType").val();
-			if ($.trim(search) == ""){return false;}
-
-			$("#bGo").val("Searching...").addClass('disabled');
-			$("#grid").html("");
-			$("#results-wrapper").hide()
-
-
-			$.ajax({
-				url: 'search.php?anti=' + Math.random(),
-				type: 'GET',
-				dataType: 'json',
-				data: {type: type, search: search},
-			})
-			.done(function(data) {
-				if ($.trim(data) !== ""){
-					if (data.status == 1 ) {
-
-						if (data.count == 1) {
-							location.href="details.php?id=" + data.id;
-							return false;
-						}
-						if (data.count > 1) {
-							$("#results-wrapper").show();
-							$("#grid").html(data.html);
-							renderTable();
-						}else {
-							//no records
-							showAlert(data.message);
-						}						
-
-					}else{
-						showAlert("Status is false.");
-					}
-				}else{
-					showAlert("No data recieved.");
-				}
-
-				console.log("success");
-			})
-			.fail(function(err) {
-				alert("error fetching results.")
-				console.log("error");
-			})
-			.always(function() {
-				console.log("complete");
-				$("#bGo").val(" GO ").removeClass('disabled');
-			});
-
-		}
-
-		function showAlert(msg){
-			$("#warningAlert").show().removeClass('hide').children("p:first").text(msg);
-		}
-
-		function renderTable(){
-			$('#grid').DataTable({
-    		 	"lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
-				iDisplayLength: 50,
-				repsonsive:true,
-				destroy: true
-    		});
-		}
-		
-	</script>
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 </head>
 
 <body>
@@ -171,18 +70,16 @@ error_reporting(E_ALL & ~E_NOTICE);
 	}
 
 
-	$query = "SELECT COUNT(R.MainContactId) + (SELECT COUNT(M.MainContactId) FROM MainContact M WHERE M.Cancelled = 0) TotalAttendance, 
-				(SELECT SUM(P.PaidAmount) FROM Payment P) TotalPaid,
-				SUM(R.Fee) + (SELECT SUM(M.Fee) FROM MainContact M WHERE M.Cancelled = 0) TotalFees 
-				FROM Registrant R WHERE R.Cancelled = 0;
-				";
+	$query = "SELECT  (SELECT COUNT(M.MainContactId) FROM MainContact M WHERE M.Cancelled = 0) TotalAttendance, 
+	(SELECT SUM(P.PaidAmount) FROM Payment P) TotalPaid,
+	(SELECT SUM(M.Fee) FROM MainContact M WHERE M.Cancelled = 0) TotalFees ;";
 	$datas = $database->query($query)->fetchAll();
 
 
-	$transfers = $database->query("SELECT COUNT(R.AirportTransfer) + (SELECT COUNT(M.AirportTransfer) FROM MainContact M WHERE M.AirportTransfer = 1 AND M.Cancelled = 0) as AirportTransferTotal FROM Registrant R WHERE R.AirportTransfer = 1 AND R.Cancelled = 0;")->fetchAll();
+	$transfers = $database->query("SELECT COUNT(M.AirportTransfer) as AirportTransferTotal FROM MainContact M WHERE M.AirportTransfer = 1 AND M.Cancelled = 0")->fetchAll();
 
 
-	$ages = $database->query("SELECT R.Age FROM Registrant R GROUP BY R.Age UNION SELECT M.Age FROM MainContact M GROUP BY M.Age ORDER BY Age;")->fetchAll();
+	$ages = $database->query("SELECT M.Age FROM MainContact M GROUP BY M.Age ORDER BY Age;")->fetchAll();
 
 	setlocale(LC_MONETARY, 'en_AU');
 	$html2 = sprintf('<div class="row">
@@ -243,17 +140,14 @@ error_reporting(E_ALL & ~E_NOTICE);
 				<?php 
 
 					//payments stats
-					$query = "SELECT M . * , (M.Fee + IFNULL((
-							SELECT SUM( R.Fee ) 
-							FROM Registrant R
-							WHERE R.MainContactId = M.MainContactId AND R.Cancelled = 0
-							),0)) as TotalFee,
-							IFNULL((SELECT SUM(P.PaidAmount) FROM Payment P WHERE P.MainContactId = M.MainContactId), 0 ) as TotalPaid,
-							DATEDIFF(CURDATE(), M.DateTimeEntered) DaysElapsed,
-							Month(M.DateTimeEntered) MonthRegistered
-						FROM MainContact M
-						WHERE M.Cancelled = 0
-						ORDER BY M.DateTimeEntered";
+					$query = "SELECT M.DateTimeEntered , SUM(M.Fee) as TotalFee,
+					IFNULL((SELECT SUM(P.PaidAmount) FROM Payment P WHERE P.MainContactId = M.MainContactId), 0 ) as TotalPaid,
+												DATEDIFF(CURDATE(), M.DateTimeEntered) DaysElapsed,
+												Month(M.DateTimeEntered) MonthRegistered
+											FROM MainContact M
+											WHERE M.Cancelled = 0
+											GROUP BY M.DateTimeEntered, M.MainContactId
+											ORDER BY M.DateTimeEntered";
 
 					$datas = $database->query($query)->fetchAll();	
 
@@ -381,7 +275,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 <script type="text/javascript">
 	
 	$(function(){
-
 		stackedChart()
 	});
 

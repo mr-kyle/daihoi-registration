@@ -6,8 +6,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 <html class="no-js" lang="en">
 <head>
     <?php require '_scripts.php' ?>
-	<link rel="stylesheet" href="css/responsive-tables.css">
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+
 	<title>Registration Details</title>
 	<script>
 		var REGO_ID = <?php echo $_GET['id']; ?>;	

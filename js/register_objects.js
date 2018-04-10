@@ -219,7 +219,7 @@
             return fee;
 
         },
-        calculateFeeAdmin: function (airbed, age,airport,family_discount, pensioner, earlybird){ //does fee calculation on all aspects (admin use)
+        calculateFeeAdmin: function (age,airport,family_discount, pensioner, earlybird){ //does fee calculation on all aspects (admin use)
             if (typeof earlybird === "undefined") { earlybird = false }
 
             var fee = 0;

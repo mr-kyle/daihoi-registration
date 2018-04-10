@@ -1,3 +1,4 @@
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/includes/_cApp.php' ?>
 <?php	
 // Report all errors except E_NOTICE
 error_reporting(E_ALL & ~E_NOTICE);
@@ -7,10 +8,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 <head>
     <title>Edit Details</title>
     <?php require '_scripts.php' ?>
-
     <style type="text/css">
       input:checked ~ .red { background: red !important; }
-
       .callout-cancelled {width: 80%; margin: 0 auto; text-align: center; border-radius: 7px !important;}
     </style>
 </head>
@@ -372,13 +371,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 </div>
  
 
-
-
-
-<div id="json">
-  
-
-</div>
+<div id="json" class="<?php echo (AppConfig::$DEBUG ? '' : 'hidden' ) ?>"></div>
 
 
 	<?php require '_scripts_startup.php' ?> 
@@ -387,8 +380,6 @@ error_reporting(E_ALL & ~E_NOTICE);
   <script src="/js/register_objects.js?<?php echo rand() ?>"></script>
 
 	<script type="text/javascript">
-
-
 
 	    $(function(){
 	      //setTimeout("getNotes()",500);
@@ -446,11 +437,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	        var Age             = $("#tAge").val();
 	        var AirportTransfer = document.getElementById("cbAirport").checked;
-	        var Airbed          = document.getElementById("cbAirbed").checked;
           var Pensioner       = document.getElementById("cbPensioner").checked;
 	        var EarlyBird       = document.getElementById("cbEarlyBird").checked;
 
-	        var fee = REGO_CALCULATOR.calculateFeeAdmin(Airbed, Age, AirportTransfer,
+	        var fee = REGO_CALCULATOR.calculateFeeAdmin(Age, AirportTransfer,
 	          document.getElementById("ddlFamilyDiscount").selectedIndex, Pensioner, EarlyBird);
 
 	        document.getElementById('tFee').value = fee;
@@ -473,7 +463,7 @@ error_reporting(E_ALL & ~E_NOTICE);
           r.FamilyDiscount   = $("#ddlFamilyDiscount").val();
           r.Gender           = $("#ddlGender").val();
           r.AirportTransfer  = document.getElementById("cbAirport").checked;
-          r.Airbed           = document.getElementById("cbAirbed").checked;
+          //r.Airbed           = document.getElementById("cbAirbed").checked;
           r.Fee              = updateFee();
           r.Cancelled        = document.getElementById("cbCancelled").checked;
           r.Pensioner        = document.getElementById("cbPensioner").checked;
@@ -481,7 +471,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	        $("#json").html(JSON.stringify(r)).show();
 
-	        //sendData(JSON.stringify(r), <?php echo ($RegistrantId == "") ? 0 : $RegistrantId ; ?>, "update-registrant");
+	        sendData(JSON.stringify(r), <?php echo ($MainContactId == "") ? 0 : $MainContactId ; ?>, "update-registrant");
 	    }
 
 	    function getMainContact(){
@@ -496,7 +486,7 @@ error_reporting(E_ALL & ~E_NOTICE);
           r.Phone            = $("#tPhone").val();
           r.Gender           = $("#ddlGender").val();
           r.AirportTransfer  = document.getElementById("cbAirport").checked;
-          r.Airbed           = document.getElementById("cbAirbed").checked;
+          //r.Airbed           = document.getElementById("cbAirbed").checked;
           r.Church           = $("#ddlChurch").val();
           r.Fee              = updateFee();
           r.Cancelled        = document.getElementById("cbCancelled").checked;

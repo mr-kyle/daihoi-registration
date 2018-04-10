@@ -68,19 +68,14 @@ error_reporting(E_ALL & ~E_NOTICE);
 			return false;
 		}
 
-
-
 		//create the database object
 		$database = createDb();
-
 
 		// work through JSON and update either the main contact or the registrant
 		$rowsAffected = 0;
 		foreach (json_decode($json, true) as $entry ) {
 
-
 			//update maincontact
-
 			if ($entry['type'] == 'MainContactId' && $entry['id'] > 0) {
 
 				$rowsAffected =	$database->update("MainContact", [
@@ -100,37 +95,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 			}
 
-
-
-			//update registrant
-
-			if ($entry['type'] == 'RegistrantId' && $entry['id'] > 0) {
-
-					
-				$rowsAffected = $database->update("Registrant", [
-						"CheckedIn"    => $entry['checkin'],
-						], [
-							"AND" => [
-								"RegistrantId" => $entry['id'],
-								"Cancelled" 	=> false
-								]
-						]);
-
-				if ($rowsAffected > 0 ) {
-					$r->status = 1;
-				}else{
-					$r->message .= "Nothing to update, record has existing information.";
-				}
-
-			}
-
 		}
 
-
-		//return json
-		
+		//return json		
 		echo $r->toJSON();		
-
 
 	}
 
@@ -204,9 +172,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 		}
 
 		//create the db
-		$database = createDb();		
-
-
+		$database = createDb();	
 
 		//get the admin notes
 		$datas = $database->select("Note", "*", [
@@ -260,29 +226,27 @@ error_reporting(E_ALL & ~E_NOTICE);
 			return false;
 		}
 
-
-
 		//create the database object
 		$database = createDb();
-
-
 
 		//decode the json into associative arrays
 		$rowsAffected = 0;
 		$ob = json_decode($json, true);
 
-
-
-
 			//update registrant
 			if ($id > 0 && $ob['Fee'] > 0) {
-
 
 				//create a calculator objcet
 				$calculator = new FeeCalculator();
 
 				//use object to calculate fee
-				$calculatedFee = $calculator->calculateFee($ob['Age'], $ob['FamilyDiscount'], $ob['Airbed'], $ob['AirportTransfer'], $ob['Pensioner'], $ob['EarlyBirdSpecial']);
+				$calculatedFee = $calculator->calculateFee(
+								$ob['Age'], 
+								$ob['FamilyDiscount'], 
+								false, 
+								$ob['AirportTransfer'], 
+								$ob['Pensioner'], 
+								$ob['EarlyBirdSpecial']);
 
 		    	//check to see if given fee is same as calculated fee
 		    	if ($ob['Fee'] != $calculatedFee ){
@@ -298,13 +262,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 				]);		
 					
 				//do the update
-				$rowsAffected = $database->update("Registrant", [
+				$rowsAffected = $database->update("MainContact", [
 						"FullName"         => $ob['Firstname'] . ' ' . $ob['Surname'],
 						"Firstname"        => $ob['Firstname'],
 						"Surname"          => $ob['Surname'],
 						"Age"              => $ob['Age'],
 						"Role"             => $ob['Role'],
-						"Airbed"           => $ob['Airbed'],
+						//"Airbed"           => $ob['Airbed'],
 						"FamilyDiscount"   => $ob['FamilyDiscount'],
 						"AirportTransfer"  => $ob['AirportTransfer'],
 						"Gender"           => $ob['Gender'],
@@ -314,7 +278,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 						"Pensioner"        => $ob['Pensioner'],
 						"EarlyBirdSpecial" => $ob['EarlyBirdSpecial'],
 						], [
-						"RegistrantId"     => $id
+						"MainContactId"     => $id
 						]);
 
 				if ($rowsAffected > 0 ) {
@@ -339,16 +303,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 					$r->message = 'No Id or no Fee: ' . $ob['Fee'];
 					echo $r->toJSON();
 					return false;
-					
-
 			}
 
-
-
-		//return json
-		
+		//return json		
 		echo $r->toJSON();		
-
 
 	}
 
@@ -371,28 +329,27 @@ error_reporting(E_ALL & ~E_NOTICE);
 			return false;
 		}
 
-
-
-
 		//create the database object
 		$database = createDb();
-
 
 		//decide json
 		$rowsAffected = 0;
 		$ob = json_decode($json, true);
 
-
-
 			//update registrant
 			if ($id > 0 && $ob['Fee'] > 0) {
-
 
 				//create a calculator objcet
 				$calculator = new FeeCalculator();
 
 				//use object to calculate fee
-				$calculatedFee = $calculator->calculateFee($ob['Age'], '', $ob['Airbed'], $ob['AirportTransfer'], $ob['Pensioner'], $ob['EarlyBirdSpecial']);
+				$calculatedFee = $calculator->calculateFee(
+									$ob['Age'], 
+									'-', 
+									false, 
+									$ob['AirportTransfer'], 
+									$ob['Pensioner'], 
+									$ob['EarlyBirdSpecial']);
 
 		    	//check to see if given fee is same as calculated fee
 
@@ -416,7 +373,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 						"Surname"          => $ob['Surname'],
 						"Age"              => $ob['Age'],
 						"Role"             => $ob['Role'],
-						"Airbed"           => $ob['Airbed'],
+						//"Airbed"           => $ob['Airbed'],
 						"AirportTransfer"  => $ob['AirportTransfer'],
 						"Gender"           => $ob['Gender'],
 						"Church"           => $ob['Church'],
@@ -443,7 +400,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 				}else{
-					$r->message .= "Nothing to update, record has existing information.";
+					$r->message .= "Nothing to update, record has existing information!";
 				}
 
 			}else{
@@ -452,16 +409,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 					$r->message = 'No Id or no Fee: ' . $ob['Fee'];
 					echo $r->toJSON();
 					return false;
-					
-
 			}
 
-
-
 		//return json
-		
-		echo $r->toJSON();		
-
+		echo $r->toJSON();
 
 	}
 

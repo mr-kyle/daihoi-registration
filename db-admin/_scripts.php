@@ -5,6 +5,8 @@
 	<link rel="stylesheet" type="text/css"	href="DataTables/datatables.min.css"/>
 	<script src="js/vendor/jquery.min.js"></script>
 	<script type="text/javascript" src="DataTables/datatables.min.js"></script>
+	<link rel="stylesheet" href="css/responsive-tables.css">
+    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">	
 	<?php 
 		/*
 		//restict site usage by ip

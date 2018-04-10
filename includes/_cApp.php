@@ -32,6 +32,10 @@
         }
 
 
+        //ADMIN
+        public static $DEBUG = true;
+
+
     }
 
 

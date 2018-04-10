@@ -7,7 +7,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 <head>
 	<title>Registration Dashboard</title>
 	<?php require '_scripts.php' ?>
-    <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css" />
 </head>
 
 <body>

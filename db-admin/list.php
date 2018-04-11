@@ -23,14 +23,13 @@
 
 			$database = createDb();
 
-
-			// $datas = $database->select("MainContact", "*" , [
-			// 	"MainContactId[>]" => 0,
-			// 	"ORDER" => "MainContactId"
-			// ]);
-
-			//SELECT M.*, SELECT(COUNT R.MainContactId FROM Registrant R WHERE R.MainContactId=M.MainContactId) GroupTotal FROM MainContact M ORDER BY M.MainContactId
-			$query = "SELECT M.*, (SELECT COUNT(R.MainContactId) FROM Registrant R WHERE R.MainContactId = M.MainContactId) as OtherRegistrants FROM MainContact M ORDER BY M.MainContactId";
+			$query = "SELECT M.*, 
+			(SELECT COUNT(R.MainContactId) 
+			FROM MainContact R 
+			WHERE R.GroupLeaderMainContactId = M.MainContactId) as OtherRegistrants 
+			FROM MainContact M 
+			WHERE M.GroupLeaderMainContactId IS NULL
+			ORDER BY M.MainContactId DESC";
 			$datas = $database->query($query)->fetchAll();
 	
 

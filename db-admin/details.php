@@ -66,6 +66,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 				<td class="currency">$%01.2f</td>
 
+				<td><a href="#" data-open="roomsModal">%s</a></td>
 
 			</tr>';
 
@@ -196,6 +197,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 											<th>Fee</th>
 
+											<th>Room</th>
+
 										</tr></thead>
 
 										<tbody>';
@@ -240,6 +243,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 								, $row["Fee"]
 
+								, "ROOM"
+
 								);
 
 
@@ -254,7 +259,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 			echo sprintf('<tfoot><tr>
 					<td colspan="8">&nbsp;</td>
-					<td class="currency">$%01.2f</td></tr></tfoot>', 
+					<td class="currency">$%01.2f</td>
+					<td>&nbsp;</td>	
+					</tr></tfoot>', 
 					$groupFees);
 
 
@@ -346,9 +353,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 		    <!-- 
 			<BUTTON ONCLICK="FILLREGOPAYMENTAMOUNTS()" CLASS="HOLLOW BUTTON ROUND" TITLE="PRE FILLS THE ENTIRE REGISTRATION OF THEIR RESPECTIVE FEE IN THE PAYMENT FIELD."><I CLASS="FA FA-USD"> </I> FILL ENTIRE REGISTRATION AMOUNT</BUTTON>
 			-->
-
-
-
 		    <!-- <button onclick="getJSON()" class="button round"><i class="fa fa-envelope-o"> </i> Email</button> -->			
 
 		    <div>&nbsp;</div>
@@ -484,12 +488,21 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	</button>
 
+</div>
 
+
+<div id="roomsModal" class="reveal" data-reveal  aria-hidden="true" role="dialog">
+	<h3>Availvable Rooms</h3>
+	<div id="rooms-container"></div>
+	<button class="close-button" data-close aria-label="Close reveal" type="button" id="buttonRoomsClose">
+		<span aria-hidden="true">&times;</span>
+	</button>
 
 </div>
 
 
-	<div id="json"></div>
+
+	<div id="json" class="<?php echo (AppConfig::$DEBUG ? '' : 'hidden' ) ?>"></div>
 
 
 	<?php require '_scripts_startup.php' ?> 
@@ -575,6 +588,15 @@ error_reporting(E_ALL & ~E_NOTICE);
 			
 		}
 
+
+	$(document).on('open.zf.reveal', '[data-reveal]', function () {
+		var modal = $(this);
+		if (modal.attr("id") == "roomsModal"){
+			listRooms(document.getElementById('rooms-container'))
+		}
+	});
+
+
 	</script>
 
 
@@ -596,9 +618,4 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 </body>
 
-
-
 </html>
-
-
-

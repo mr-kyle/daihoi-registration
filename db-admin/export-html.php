@@ -26,7 +26,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 				    GROUP BY N.MainContactId
 
 				) as AdminNotes
-				FROM vAllRegos R
+				FROM MainContact R
 			")->fetchAll();
 
 		$MainContactId = 0;
@@ -139,89 +139,21 @@ error_reporting(E_ALL & ~E_NOTICE);
 							$html_body = $html_body . '</tr>';
 
 
-								$MainContactId = $row["MainContactId"];
-
-								
+							$MainContactId = $row["MainContactId"];								
 
 						}
-
-
-
-
-
-
-
-						if ($row["RName"] != '') {
-
-							// Add some data
-
-							$counter = $counter + 1;
-
-							$html_body = $html_body . '</tr>';
-
-							$html_body = $html_body . '<td>' . $row["RegistrantId"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .  $row["RName"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .  $row["Reference"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .  $row["RAge"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   '</td>' ;
-
-							$html_body = $html_body . '<td>' .   '</td>' ;
-
-							$html_body = $html_body . '<td>' .   $row["Church"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   $row["RFamilyDiscount"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   ToYesNo($row["RAirbed"]) . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   ToYesNo($row["RAirportTransfer"]) . '</td>' ;
-
-							$html_body = $html_body . '<td>' .  $row["RRelation"]  . '</td>';
-
-							$html_body = $html_body . '<td>' .  $row["RFee"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   $row["DateTimeEntered"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   ''  . '</td>';
-
-							$html_body = $html_body . '<td>' .   ToYesNo($row["RCheckedIn"]) . '</td>' ;
-
-							$html_body = $html_body . '<td>' .  '0' . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   ToYesNo($row["RCancelled"]) . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   ToYesNo($row["RPensioner"]) . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   $row["RRole"] . '</td>' ;
-
-							$html_body = $html_body . '<td>' .   $row["RGender"]  . '</td>';
-
-							$html_body = $html_body . '<td>' .   $row["RFirstname"]  . '</td>';
-
-							$html_body = $html_body . '<td>' .   $row["RSurname"]  . '</td>';									
-
-							$html_body = $html_body . '<td>' .   ''  . '</td>' ;	
-
-							$html_body = $html_body . '<td>' .  ''  . '</td>' ;
-							$html_body = $html_body . '</tr>';
-
-						}
-
 							
-
 					}
 
-
 			}
+
+			$date = new DateTime();			
 
 			// clean the output buffer
 			ob_clean();
 
 			header("Content-type:application/vnd.ms-excel");
-			header("Content-Disposition:attachment;filename='downloaded.xls'");
+			header("Content-Disposition:attachment;filename='rego-export-" . $date->getTimestamp() .".xls'");
 			
 			echo '<table border="1">';
 			echo $html_header;

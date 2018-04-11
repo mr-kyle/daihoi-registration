@@ -804,9 +804,9 @@
 
 
         <!-- footer -->
-        <?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/_footer.php');?> 
+    <?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/_footer.php');?> 
 
-    <div id="json" style="display: none !important;"></div>    
+    <div id="json" class="<?php echo (AppConfig::$DEBUG ? '' : 'hidden' ) ?>"></div>   
 
 
     <div class="modal fade" id="myModal" role="dialog">

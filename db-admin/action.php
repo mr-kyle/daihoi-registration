@@ -710,12 +710,80 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 	/**
+	 * lists rooms
+	 *
+	 * @return json
+	 * @author 
+	 **/
+	function ListRooms(){
+
+		//set the header
+		header('Content-Type: application/json');
+			
+		//init variables
+		$r = new RESPONSE(0);
+
+		//validate the id and data
+		// if ($id == "" || $id < 1){
+		// 	$r->message = "No data.";
+		// 	echo $r->toJSON();	
+		// 	return false;
+		// }
+
+
+
+
+		try {
+
+			//create the database connecion
+			$database = createDb();	
+
+			$query = "SELECT * FROM room";
+			$datas = $database->query($query)->fetchAll();	
+
+
+			if( count($datas) > 0){
+				
+				foreach ($datas as $row) {
+					$r->html .= sprintf('<li>%s (%s)</li>', 
+											$row["RoomNumber"],
+											$row["Capacity"]);	
+				}
+				
+				$r->html = '<ul>' . $r->html . '</ul>';
+			}
+
+
+			//
+			$r->status = 1;
+			$r->message = '';
+			echo $r->toJSON();
+
+			return false;
+
+
+		} catch (Exception $e) {
+
+			//should log error in db
+			$r->message = 'Exception Error: ' . $e->getMessage();
+		}
+
+		echo $r->toJSON();
+
+	}
+
+
+
+	/**
 	 * determine what request it is and assign appropiate action
 	 **/
 	if( $_GET['type'] == "notes"){
 
 		addNotes();
-
+		
+	}elseif ($_GET['type'] == "list-rooms") {
+	
+		ListRooms();
 
 	}elseif ($_GET['type'] == "get-notes") {
 		

@@ -390,3 +390,35 @@ function enableSMSButton(){
     $("#cSendSMS").removeClass("disabled")
     $("#cSendSMS").prop('disabled', false);			
 }
+
+
+
+function listRooms(targetEl){
+
+    $("#callout-success").hide();
+    $("#callout-alert").hide();
+
+
+    //$("#json").html(JSON.stringify(payment));
+    $.ajax({
+        url: 'action.php?type=list-rooms&cache=' + Math.random(),
+        type: 'GET',
+        dataType: 'json',
+        data: {
+        },
+    })
+    .done(function(data) {
+        if (data.status == 1){
+            targetEl.innerHTML = data.html;
+        }
+        console.log("success");
+    })
+    .fail(function(jqXHR) {
+        $("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+
+}

@@ -168,3 +168,8 @@ div.switch {
 #outstanding-balance { width: 100%; text-align: center; }
 #outstanding-balance .label {padding: 10px !important; width: 100%}
 #outstanding-balance .label wanring {color:#777;}
+
+
+.marginless {
+    margin:0;
+}

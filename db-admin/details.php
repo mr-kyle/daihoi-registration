@@ -66,11 +66,15 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 				<td class="currency">$%01.2f</td>
 
-				<td><a href="#" data-open="roomsModal">%s</a></td>
+				<td><a href="#" onclick="openRoomsModal(%s);" data-open="roomsModal">%s</a></td>
 
 			</tr>';
 
-			$query = "SELECT * FROM MainContact M WHERE M.MainContactId = " . $id . " OR M.GroupLeaderMainContactId = " . $id . "  ORDER BY IFNULL(GroupLeaderMainContactId,0) ";
+			$query = "SELECT M.*, A.RoomId, R.RoomNumber FROM MainContact M 
+			LEFT OUTER JOIN RoomAllocation A ON A.MainContactId = M.MainContactId
+			LEFT OUTER JOIN Room R ON R.RoomId = A.RoomId
+			WHERE M.MainContactId = " . $id ."  OR M.GroupLeaderMainContactId = " . $id . "
+			ORDER BY IFNULL(GroupLeaderMainContactId,0) ";
 
 			$datas = $database->query($query)->fetchAll();	
 
@@ -243,7 +247,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 								, $row["Fee"]
 
-								, "ROOM"
+								, $row["MainContactId"]
+
+								, ($row["RoomNumber"] == "" ? "ROOM" : $row["RoomNumber"] )
+
 
 								);
 
@@ -491,7 +498,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 </div>
 
 
-<div id="roomsModal" class="reveal" data-reveal  aria-hidden="true" role="dialog">
+<div id="roomsModal" class="reveal large" data-reveal  aria-hidden="true" role="dialog">
 	<h3>Availvable Rooms</h3>
 	<div id="rooms-container"></div>
 	<button class="close-button" data-close aria-label="Close reveal" type="button" id="buttonRoomsClose">
@@ -589,13 +596,17 @@ error_reporting(E_ALL & ~E_NOTICE);
 		}
 
 
-	$(document).on('open.zf.reveal', '[data-reveal]', function () {
-		var modal = $(this);
-		if (modal.attr("id") == "roomsModal"){
-			listRooms(document.getElementById('rooms-container'))
-		}
-	});
+		$(document).on('open.zf.reveal', '[data-reveal]', function () {
+			var modal = $(this);
+			if (modal.attr("id") == "roomsModal"){
+				//listRooms(document.getElementById('rooms-container'))
+			}
+		});
 
+		function openRoomsModal(id){
+			listRooms(document.getElementById('rooms-container'), id);
+			$('#roomsModal').foundation('open');
+		}
 
 	</script>
 

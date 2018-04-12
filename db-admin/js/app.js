@@ -393,7 +393,7 @@ function enableSMSButton(){
 
 
 
-function listRooms(targetEl){
+function listRooms(targetEl, personId){
 
     $("#callout-success").hide();
     $("#callout-alert").hide();
@@ -405,11 +405,14 @@ function listRooms(targetEl){
         type: 'GET',
         dataType: 'json',
         data: {
+            id: personId,
         },
     })
     .done(function(data) {
         if (data.status == 1){
             targetEl.innerHTML = data.html;
+        }else{
+            $("#callout-alert").slideDown().find("p:first").text(data.message);
         }
         console.log("success");
     })
@@ -421,4 +424,40 @@ function listRooms(targetEl){
         console.log("complete");
     });
 
-}
+};
+
+
+function assignPersonToRoom(personId, roomId){
+
+    $("#callout-success").hide();
+    $("#callout-alert").hide();
+
+
+    //$("#json").html(JSON.stringify(payment));
+    $.ajax({
+        url: 'action.php?type=assign-person-to-room&cache=' + Math.random(),
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            id: personId,
+            rid: roomId,
+        },
+    })
+    .done(function(data) { 
+        if (data.status == 1){
+            $("#callout-success").slideDown().find("p:first").text(data.message);
+        }else {
+            $("#callout-alert").slideDown().find("p:first").text(data.message);
+        }
+        console.log("success");
+    })
+    .fail(function(jqXHR) {
+        $("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
+        console.log("error");
+    })
+    .always(function() {
+        $('#roomsModal').foundation('close');
+        console.log("complete");
+    });
+
+};

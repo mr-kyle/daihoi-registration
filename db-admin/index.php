@@ -25,7 +25,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 			"DateTimeEntered",
 			"MainContactId"
 		] , [
-			"MainContactId[>]" => 0,
+			"AND" => [
+				"MainContactId[>]" => 0,
+				"GroupLeaderMainContactId" => null
+			],
 			"ORDER" => ["MainContactId" => "DESC"]
 		]
 	);

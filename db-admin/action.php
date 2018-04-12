@@ -730,7 +730,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 		// 	return false;
 		// }
 
+		//$html = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/register/summary_template.php");
 
+		$mid = $_GET['id']; //person to assgin room to
 
 
 		try {
@@ -738,19 +740,46 @@ error_reporting(E_ALL & ~E_NOTICE);
 			//create the database connecion
 			$database = createDb();	
 
-			$query = "SELECT * FROM room";
+			$query = "SELECT R.*, (SELECT COUNT(*) FROM RoomAllocation A WHERE A.RoomId = R.RoomId) as Occupancy FROM Room R";
 			$datas = $database->query($query)->fetchAll();	
 
 
 			if( count($datas) > 0){
 				
 				foreach ($datas as $row) {
-					$r->html .= sprintf('<li>%s (%s)</li>', 
+
+					$status = '<span class="label secondary">Vaccant</span>';
+
+					if ( (int)$row["Occupancy"] > (int)$row["Capacity"] ){
+						$status = '<span class="label warning">Overfilled</span>';
+
+					}elseif ((int)$row["Occupancy"] == (int)$row["Capacity"]){
+						$status = '<span class="label success">Occupied</span>';
+
+					}
+				
+
+					$r->html .= sprintf('<tr>
+											<td>%s</td>
+											<td>%s</td>
+											<td>%s : %s %s</td>
+											<td>%s: %s</td>
+											<td style="width: 50px; text-align:right;white-space:nowrap;">
+											<button onclick="assignPersonToRoom(%s,%s)" class="button round small marginless"><i class="fa fa-check" aria-hidden="true"></i> assign</button>
+											</td>
+										</tr>', 
 											$row["RoomNumber"],
-											$row["Capacity"]);	
+											$row["RoomType"],
+											$row["Capacity"],
+											$row["Occupancy"],
+											$status,
+											$row["IsAvailable"],
+											$row["Comments"],
+											$mid,
+											$row["RoomId"]);	
 				}
 				
-				$r->html = '<ul>' . $r->html . '</ul>';
+				$r->html = '<table border="1"><thead><tr><th>Number</th><th>Type</th><th>Capacity/Occupancy</th><th>Comments</th><th>&nbsp;</th></tr></thead>' . $r->html . '</table>';
 			}
 
 
@@ -774,6 +803,52 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 
+	function assignPersonToRoom($personId, $roomId){
+
+
+		//set the header
+		header('Content-Type: application/json');
+		$r = new RESPONSE(0);
+
+		//validate data
+		if (is_numeric($roomId) == false || is_numeric($personId) == false){
+			$r->message = 'no data to process.';
+			echo $r->toJSON();
+			return false;
+		}
+
+		//create the database
+		$database = createDb();
+
+		//dont assign person twice
+		$datas = $database->select("RoomAllocation", "*", [
+			"MainContactId" => $personId 
+		]);
+				
+		if(count($datas) > 0){
+			$r->status = 0;
+			$r->message = 'Person is already allocated to a room.';
+			echo $r->toJSON();
+			return false;
+		}
+
+		//do insert if allowed
+		$database->insert("RoomAllocation", [
+			"RoomId"    		=>  $roomId,
+			"MainContactId"    	=>  $personId,
+		]);
+
+		//set the status for success
+		$r->status = 1;
+		$r->message = 'Successfully allocated';
+		
+		//return json
+		echo $r->toJSON();				
+
+	}
+
+
+
 	/**
 	 * determine what request it is and assign appropiate action
 	 **/
@@ -784,6 +859,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 	}elseif ($_GET['type'] == "list-rooms") {
 	
 		ListRooms();
+
+	}elseif ($_GET['type'] == "assign-person-to-room") {
+	
+		assignPersonToRoom($_POST["id"], $_POST["rid"]);
 
 	}elseif ($_GET['type'] == "get-notes") {
 		
@@ -816,10 +895,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 		if (!($json == "")) {
 			updateCheckin($json);
 		}else{
-
+			
 			header('Content-Type: application/json');
 			$r = new RESPONSE(0);
-			$r->message = 'No json data.';
+			$r->message = 'No json data!!' . $_POST['type'] . 'XXXS';
 			echo $r->toJSON();	
 		}
 	}

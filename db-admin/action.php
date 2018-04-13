@@ -740,7 +740,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 			//create the database connecion
 			$database = createDb();	
 
-			$query = "SELECT R.*, (SELECT COUNT(*) FROM RoomAllocation A WHERE A.RoomId = R.RoomId) as Occupancy FROM Room R";
+			$query = "
+				SELECT R.*,
+				(SELECT COUNT(*) FROM RoomAllocation A WHERE A.RoomId = R.RoomId) as Occupancy,
+				(SELECT GROUP_CONCAT(M.Fullname SEPARATOR ', ' ) FROM RoomAllocation A INNER JOIN MainContact M ON M.MainContactId = A.MainContactId WHERE A.RoomId = R.RoomId) as Occupants,
+				(SELECT GROUP_CONCAT(M.MainContactId SEPARATOR ',' ) FROM RoomAllocation A INNER JOIN MainContact M ON M.MainContactId = A.MainContactId WHERE A.RoomId = R.RoomId) as OccupantIds
+				FROM Room R;			
+			";
 			$datas = $database->query($query)->fetchAll();	
 
 
@@ -748,21 +754,40 @@ error_reporting(E_ALL & ~E_NOTICE);
 				
 				foreach ($datas as $row) {
 
+					//vaccancy lofic
 					$status = '<span class="label secondary">Vaccant</span>';
-
 					if ( (int)$row["Occupancy"] > (int)$row["Capacity"] ){
 						$status = '<span class="label warning">Overfilled</span>';
 
 					}elseif ((int)$row["Occupancy"] == (int)$row["Capacity"]){
-						$status = '<span class="label success">Occupied</span>';
-
+						$status = '<span class="label success">Full</span>';
 					}
-				
 
+					//logic to display occupants
+					$occupantNames = explode(",",$row["Occupants"]);
+					$occupantIds   = explode(",",$row["OccupantIds"]);
+					$names = '';
+					for ($x = 0; $x < count($occupantIds); $x++) {
+						
+						if ($occupantIds[$x] !== ""){
+
+							$names .= sprintf('<a href="#" data-id="%s" style="padding-right:5px;"><i class="fa fa-user"></i> %s</a>&nbsp;',
+									$occupantIds[$x],
+									trim($occupantNames[$x]));
+
+						}
+						
+					} 
+					
+
+
+
+				
+					//format render
 					$r->html .= sprintf('<tr>
 											<td>%s</td>
 											<td>%s</td>
-											<td>%s : %s %s</td>
+											<td>%s : %s %s<br/>%s</td>
 											<td>%s: %s</td>
 											<td style="width: 50px; text-align:right;white-space:nowrap;">
 											<button onclick="assignPersonToRoom(%s,%s)" class="button round small marginless"><i class="fa fa-check" aria-hidden="true"></i> assign</button>
@@ -772,14 +797,15 @@ error_reporting(E_ALL & ~E_NOTICE);
 											$row["RoomType"],
 											$row["Capacity"],
 											$row["Occupancy"],
-											$status,
+											$status, 
+											$names,
 											$row["IsAvailable"],
 											$row["Comments"],
 											$mid,
 											$row["RoomId"]);	
 				}
 				
-				$r->html = '<table border="1"><thead><tr><th>Number</th><th>Type</th><th>Capacity/Occupancy</th><th>Comments</th><th>&nbsp;</th></tr></thead>' . $r->html . '</table>';
+				$r->html = '<table role="grid" class="responsive display" id="table-rooms"><thead><tr><th>Number</th><th>Type</th><th>Capacity/Occupancy</th><th>Comments</th><th>&nbsp;</th></tr></thead><tbody>' . $r->html . '</tbody></table>';
 			}
 
 

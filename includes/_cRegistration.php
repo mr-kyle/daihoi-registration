@@ -833,12 +833,9 @@
 
 				$mysqli->close();
 
-
 				return true;
 
-
 			}
-
 
 
 
@@ -1115,16 +1112,10 @@
 												 	$cancellationCounter += 1;
 												 }
 
-
 											}
 
 
 									}		
-
-
-
-
-
 
 
 
@@ -1244,10 +1235,7 @@
 							}else{
 
 								//no records
-
 								$output = '<div class="alert alert-dismissible alert-danger"><button type="button" class="close" data-dismiss="alert">X</button><i class="fa fa-frown-o fa-5x pull-left"> </i><strong>Oh no!</strong> We could not find any records the given reference number. You can try to <a href="/contact/" class="alert-link">contact the conference team</a>. for help concerning your registration.<div class="clearfix"></div></div>';
-
-
 
 							}
 
@@ -1260,10 +1248,7 @@
 
 				$mysqli->close();
 
-
 				return $output;
-
-
 
 			}
 
@@ -1288,13 +1273,10 @@
 					if (!$mysqli->set_charset("utf8")) {
 
 					    $this->logError("Error loading character set utf8:" . $mysqli->error);
-
 					    exit();
 
 					} else {
-
 					    //printf("Current character set: %s\n", $mysqli->character_set_name());
-
 					}
 
 
@@ -1311,17 +1293,13 @@
 
 
 					if (!$stmt->bind_param("ss",  $messageId, $ref )) {
-
 					    $this->logError("Binding parameters failed for DataLog: (" . $stmt->errno . ")<br />  " . $stmt->error);
-
 					}
 
 
 
 					if (!$stmt->execute()) {
-
 					    $this->logError("Execute failed DataLog: (" . $stmt->errno . ")<br /> " . $stmt->error);
-
 					}
 
 					$mysqli->close();
@@ -1352,51 +1330,36 @@
 
 
 					/* change character set to utf8 */
-
 					if (!$mysqli->set_charset("utf8")) {
-
 					    $this->logError("Error loading character set utf8:" . $mysqli->error);
-
 					    exit();
-
 					} 
 
 
 
 					if (!($stmt = $mysqli->prepare("SELECT * FROM DataLog WHERE jsonData = ? AND Status > 0"))) {
-
 					    $this->logError("Prepare failed for DataLog Update query: (" . $mysqli->errno . ") " . $mysqli->error);
-
 					}				
 
 
 					if (!$stmt->bind_param("s", $json)) {
-
 					    $this->logError("Binding parameters failed for DataLog Update 2query (" . $stmt->errno . ")<br />  " . $stmt->error);
-
 					}
 
 
 					if (!$stmt->execute()) {
-
 					    $this->logError("Execute failed DataLog Update query: (" . $stmt->errno . ")<br /> " . $stmt->error);
-
 					}
 
 
 					if ($stmt->fetch() > 0) {
-
 						$return = true;
-
 					}
-
 
 
 					$mysqli->close();
 
-
 					return $return;
-
 
 			}
 

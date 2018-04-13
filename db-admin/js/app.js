@@ -47,8 +47,8 @@ function doSearch() {
 
         console.log("success");
     })
-    .fail(function(err) {
-        alert("error fetching results.")
+    .fail(function(err, x, t) {
+        alert("error fetching results! " + t)
         console.log("error");
     })
     .always(function() {
@@ -72,6 +72,14 @@ function renderTable(){
 }
 
 
+function renderAnyTable(id){
+    $('#' + id).DataTable({
+         "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+        iDisplayLength: 10,
+        repsonsive:true,
+        destroy: true
+    });
+}
 
 /* DETAILS PAGE */
 
@@ -411,6 +419,8 @@ function listRooms(targetEl, personId){
     .done(function(data) {
         if (data.status == 1){
             targetEl.innerHTML = data.html;
+            renderAnyTable('table-rooms');
+
         }else{
             $("#callout-alert").slideDown().find("p:first").text(data.message);
         }

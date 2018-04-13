@@ -11,6 +11,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 	<script>
 		var REGO_ID = <?php echo $_GET['id']; ?>;	
 	</script>
+	<style>
+		#table-rooms td {padding:3px 10px;}
+	</style>
 </head>
 <body>
 <?php require '_menu.php' ?>
@@ -70,11 +73,25 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 			</tr>';
 
+
+			//we only want to query the group leader main contact id
+
+			//check if the id given is the group leader
+			$query = "SELECT (IFNULL(GroupLeaderMainContactId,0)) Id FROM MainContact WHERE MainContactId = " . $id . ";";
+			$datas = $database->query($query)->fetchAll();
+			
+			//if not the group leader, we will use the assigned (db) group leader id
+			$gId = (int)$datas[0]["Id"];
+			if ($gId > 0) { $id = $gId; }
+
+
+			//at this point the $id should be the group leader
 			$query = "SELECT M.*, A.RoomId, R.RoomNumber FROM MainContact M 
 			LEFT OUTER JOIN RoomAllocation A ON A.MainContactId = M.MainContactId
 			LEFT OUTER JOIN Room R ON R.RoomId = A.RoomId
 			WHERE M.MainContactId = " . $id ."  OR M.GroupLeaderMainContactId = " . $id . "
-			ORDER BY IFNULL(GroupLeaderMainContactId,0) ";
+			ORDER BY IFNULL(GroupLeaderMainContactId,0), M.MainContactId ";
+
 
 			$datas = $database->query($query)->fetchAll();	
 
@@ -498,7 +515,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 </div>
 
 
-<div id="roomsModal" class="reveal large" data-reveal  aria-hidden="true" role="dialog">
+<div id="roomsModal" class="reveal full" data-reveal  aria-hidden="true" role="dialog">
 	<h3>Availvable Rooms</h3>
 	<div id="rooms-container"></div>
 	<button class="close-button" data-close aria-label="Close reveal" type="button" id="buttonRoomsClose">

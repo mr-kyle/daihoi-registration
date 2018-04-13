@@ -91,7 +91,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 					  <div>&nbsp;</div>
 					  <div class="row">
 					  	<div class="medium-6 columns"><div class="panel-stats">Outstanding<br/>%s</div></div>
-					  	<div class="medium-6 columns"><div class="panel-stats">AirportTransfer<br/>%d</div></div>
+					  	<div class="medium-6 columns"><div class="panel-stats">Airport Transfer<br/>%d</div></div>
 					  </div>', 
 		$datas[0]["TotalAttendance"], 
 		money_format('%#0n', $datas[0]["TotalPaid"]), 
@@ -235,7 +235,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 		          </select>
 		        </div>
 		        <div class="large-1 columns">
-		          <input type="button" class="button postfix" id="bGo" onclick="doSearch()" value=" GO " style="width: 100%;" />
+		          <input type="button" class="button postfix" id="bGo" onclick="doSearch()" value=" GO " style="width: 100%;" accesskey="s" tabindex="0" />
 		        </div>
 		      </div>
 				<div class="alert callout hide" data-closable id="warningAlert">

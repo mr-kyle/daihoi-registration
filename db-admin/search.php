@@ -68,9 +68,9 @@
 			] , $where);
 
 
+		/* 
 		//search the registrants if its search by name
 		if (trim($type) == "name"){
-
 
 			$where = ["RName[~]" => $searchTerm];
 
@@ -87,6 +87,7 @@
 			//merge the 2 arrays
 			$datas = array_merge($datas, $datasR);
 		}
+		*/
 		
 
 

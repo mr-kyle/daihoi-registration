@@ -404,7 +404,7 @@ function closeCallOuts(){
 function listRooms(targetEl, personId){
 
     closeCallOuts();
-
+    document.getElementById("room-fullname").innerText = "";
 
     //$("#json").html(JSON.stringify(payment));
     $.ajax({
@@ -419,6 +419,7 @@ function listRooms(targetEl, personId){
         if (data.status == 1){
             targetEl.innerHTML = data.html;
             renderAnyTable('table-rooms');
+            document.getElementById("room-fullname").innerText = " allocation for: " + data.info;
 
         }else{
             $("#callout-alert").slideDown().find("p:first").text(data.message);

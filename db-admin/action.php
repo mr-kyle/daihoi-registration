@@ -744,12 +744,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 				SELECT R.*,
 				(SELECT COUNT(*) FROM RoomAllocation A WHERE A.RoomId = R.RoomId) as Occupancy,
 				(SELECT GROUP_CONCAT(M.Fullname SEPARATOR ', ' ) FROM RoomAllocation A INNER JOIN MainContact M ON M.MainContactId = A.MainContactId WHERE A.RoomId = R.RoomId) as Occupants,
-				(SELECT GROUP_CONCAT(M.MainContactId SEPARATOR ',' ) FROM RoomAllocation A INNER JOIN MainContact M ON M.MainContactId = A.MainContactId WHERE A.RoomId = R.RoomId) as OccupantIds
+				(SELECT GROUP_CONCAT(M.MainContactId SEPARATOR ',' ) FROM RoomAllocation A INNER JOIN MainContact M ON M.MainContactId = A.MainContactId WHERE A.RoomId = R.RoomId) as OccupantIds,
+				(SELECT FullName FROM MainContact WHERE MainContactId = " . (int)$mid . ") as FullName
 				FROM Room R;			
 			";
 			$datas = $database->query($query)->fetchAll();	
 
-
+			$personName = '';
 			if( count($datas) > 0){
 				
 				foreach ($datas as $row) {
@@ -778,9 +779,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 						
 					} 
 					
-
-
-
 				
 					//format render
 					$r->html .= sprintf('<tr>
@@ -801,17 +799,22 @@ error_reporting(E_ALL & ~E_NOTICE);
 											$row["Capacity"],
 											$names,
 											$row["IsAvailable"],
-											$row["Comments"],
+											$row["Location"],
 											$mid,
 											$row["RoomId"],
 											"'"  . urldecode($row["RoomNumber"]) . "'");
+
+					//assign the name
+					$personName = $row["FullName"];
+
 				}
 				
-				$r->html = '<table role="grid" class="responsive display" id="table-rooms"><thead><tr><th>Number</th><th>Type</th><th>Capacity/Occupancy</th><th>Comments</th><th>&nbsp;</th></tr></thead><tbody>' . $r->html . '</tbody></table>';
+				$r->html = '<table role="grid" class="responsive display" id="table-rooms"><thead><tr><th>Number</th><th>Type</th><th>Capacity/Occupancy</th><th>Location</th><th>&nbsp;</th></tr></thead><tbody>' . $r->html . '</tbody></table>';
 			}
 
 
 			//
+			$r->info = $personName;
 			$r->status = 1;
 			$r->message = '';
 			echo $r->toJSON();

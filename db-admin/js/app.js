@@ -105,8 +105,7 @@ var PAYMENT = function () {
 
 function makePayment(id){
 
-    $("#callout-success").hide();
-    $("#callout-alert").hide();
+    closeCallOuts();
 
     var payment    = new PAYMENT();
     payment.date   = document.getElementById("txtPaymentDate").value;
@@ -152,8 +151,7 @@ function makePayment(id){
 
 function getJSON(){
 
-    $("#callout-success").hide();
-    $("#callout-alert").hide();
+    closeCallOuts();
 
     var json = []; 
 
@@ -215,8 +213,7 @@ function getJSON(){
 
 function sendData(json){
 
-        $("#callout-alert").hide();
-        $("#callout-success").hide();
+    closeCallOuts();
 
         $.ajax({
             url: 'action.php?cache=' + Math.random(),
@@ -355,8 +352,7 @@ function fillRegoPaymentAmounts(){
 
 function sendSMS(id){
         //var id = <?php echo trim($_GET["id"]) ?> };
-        $("#callout-alert").hide();
-        $("#callout-success").hide();
+        closeCallOuts();
 
         $("#cSendSMS").addClass("disabled")
         $("#cSendSMS").prop('disabled', true);
@@ -395,16 +391,19 @@ function sendSMS(id){
 }		
 
 function enableSMSButton(){
-    $("#cSendSMS").removeClass("disabled")
+    $("#cSendSMS").removeClass("disabled");
     $("#cSendSMS").prop('disabled', false);			
 }
 
+function closeCallOuts(){
+    $("#callout-alert").hide();
+    $("#callout-success").hide();
+}
 
 
 function listRooms(targetEl, personId){
 
-    $("#callout-success").hide();
-    $("#callout-alert").hide();
+    closeCallOuts();
 
 
     //$("#json").html(JSON.stringify(payment));
@@ -437,11 +436,9 @@ function listRooms(targetEl, personId){
 };
 
 
-function assignPersonToRoom(personId, roomId){
+function assignPersonToRoom(personId, roomId, roomLabel){
 
-    $("#callout-success").hide();
-    $("#callout-alert").hide();
-
+    closeCallOuts();
 
     //$("#json").html(JSON.stringify(payment));
     $.ajax({
@@ -456,6 +453,8 @@ function assignPersonToRoom(personId, roomId){
     .done(function(data) { 
         if (data.status == 1){
             $("#callout-success").slideDown().find("p:first").text(data.message);
+            updateRoomLabel(personId, roomLabel);
+            toggleRoomDeleteButton(personId, true);
         }else {
             $("#callout-alert").slideDown().find("p:first").text(data.message);
         }
@@ -471,3 +470,83 @@ function assignPersonToRoom(personId, roomId){
     });
 
 };
+
+function updateRoomLabel(id, label){
+    $(".rooms-action-container").each(function(index, el){
+        
+        if($(el).attr("data-id") == id){
+            $(el).find("span.room-label").html(label);
+            return;
+        }
+
+    });
+};
+
+function toggleRoomDeleteButton(id, visible){
+    $(".rooms-action-container").each(function(index, el){
+        
+        if($(el).attr("data-id") == id){
+            if (visible){
+                $(el).find(".room-delete-button").show();
+            }else {
+                $(el).find(".room-delete-button").hide();
+            }
+            return;
+        }
+
+    });
+}
+
+
+function removePersonsToRoom(personIds){
+
+    closeCallOuts();
+
+    //$("#json").html(JSON.stringify(payment));
+    $.ajax({
+        url: 'action.php?type=remove-persons-from-room&cache=' + Math.random(),
+        type: 'POST',
+        dataType: 'json',
+        data: {
+            ids: personIds
+        },
+    })
+    .done(function(data) { 
+        if (data.status == 1){
+            $("#callout-success").slideDown().find("p:first").text(data.message);
+
+            var array = personIds.split(",");
+            $.each(array,function(i){
+                updateRoomLabel(array[i], "ROOM");
+                toggleRoomDeleteButton(array[i], false);
+             });
+
+
+        }else {
+            $("#callout-alert").slideDown().find("p:first").text(data.message);
+        }
+        console.log("success");
+    })
+    .fail(function(jqXHR) {
+        $("#callout-alert").slideDown().find("p:first").text(jqXHR.responseText);
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+
+};
+
+function refreshRoomDeleteButtons(){
+
+    $("span.room-label").each(function(){
+        var $el = $(this);
+        var $btn = $el.closest(".rooms-action-container").find(".room-delete-button");
+        if ($el.text() == "ROOM"){
+          $btn.hide();
+        } else{
+          $btn.show();
+        }
+      });
+
+}

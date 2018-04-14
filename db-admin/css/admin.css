@@ -12,6 +12,10 @@
     display: none !important;
 }
 
+.hidden-soft {
+    display: none;
+}
+
  a {
     color:#df691a;
 }

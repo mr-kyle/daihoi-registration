@@ -13,6 +13,26 @@ error_reporting(E_ALL & ~E_NOTICE);
 	</script>
 	<style>
 		#table-rooms td {padding:3px 10px;}
+		#table-rooms tr:hover > td { font-weight:bold;}
+
+		.capacity {
+			float:left;
+			border-radius:100px;
+		}
+		ul.users-link {
+			margin: 0;
+			padding: 0;
+			list-style-type: none;
+			padding-left: 30px
+		}
+		ul.users-link::after {
+			clear:both;
+		}
+
+		.room-delete-button {
+			background-color:maroon;
+			border-radius:2px; padding: 3px 5px;
+		}
 	</style>
 </head>
 <body>
@@ -69,7 +89,14 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 				<td class="currency">$%01.2f</td>
 
-				<td><a href="#" onclick="openRoomsModal(%s);" data-open="roomsModal">%s</a></td>
+				<td>
+					<div class="rooms-action-container" data-id="%s">
+						<button class="room-delete-button %s" onclick="removePersonsToRoom(%s)">X</button>&nbsp;
+						<a href="#" onclick="openRoomsModal(%s);" data-open="roomsModal">
+							<span class="room-label">%s</span>
+						</a>
+					</div>
+				</td>
 
 			</tr>';
 
@@ -265,13 +292,16 @@ error_reporting(E_ALL & ~E_NOTICE);
 								, $row["Fee"]
 
 								, $row["MainContactId"]
+								
+								, ($row["RoomNumber"] == "" ? "hidden-soft" : "" )
+
+								, "'" . $row["MainContactId"] . "'"
+
+								, $row["MainContactId"]
 
 								, ($row["RoomNumber"] == "" ? "ROOM" : $row["RoomNumber"] )
 
-
-								);
-
-
+						);
 
 				}
 
@@ -306,14 +336,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 </div>
 
 
-
-
-
-
-
 	<div class="row fixed-top">
-
-
 
 			<div class="large-12 columns">
 
@@ -348,8 +371,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 					  </button>
 
 					</div>
-
-
 
 				</div>
 
@@ -516,7 +537,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 <div id="roomsModal" class="reveal full" data-reveal  aria-hidden="true" role="dialog">
-	<h3>Availvable Rooms</h3>
+	<h3>Rooms</h3>
 	<div id="rooms-container"></div>
 	<button class="close-button" data-close aria-label="Close reveal" type="button" id="buttonRoomsClose">
 		<span aria-hidden="true">&times;</span>
@@ -567,10 +588,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 					$(el).change(function(){
 
 						var max = parseInt($(this).prop("max"));
-
 						var val = parseInt($(this).val());
-
-						
 
 						if (val == max ){
 
@@ -590,6 +608,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 					}).trigger('change');
 
 			});
+
+
+
+			refreshRoomDeleteButtons();
 
 		});
 

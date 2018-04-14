@@ -31,9 +31,10 @@ var SUBMISSION =  {
                 }
                 
             })
-            .fail(function () {
-                console.log("error");
-                $("#myModal").modal("show").find("div.modal-body").text("Error: failed sync, please click CANCEL to review your details and try again or contact the registration team.");
+            .fail(function (x,e,t) {
+                //console.log(x + e + t);
+                $("#myModal").modal("show").find("div.modal-body")
+                    .text("Error: failed sync (" + t + "), please click CANCEL to review your details and try again or contact the registration team.");
             })
             .always(function () {
                 console.log("complete");

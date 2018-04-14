@@ -1327,8 +1327,6 @@
 					}
 
 
-
-
 					/* change character set to utf8 */
 					if (!$mysqli->set_charset("utf8")) {
 					    $this->logError("Error loading character set utf8:" . $mysqli->error);

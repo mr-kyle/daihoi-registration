@@ -753,14 +753,12 @@ error_reporting(E_ALL & ~E_NOTICE);
 			if( count($datas) > 0){
 				
 				foreach ($datas as $row) {
-
-					//vaccancy lofic
-					$status = '<span class="label secondary">Vaccant</span>';
+					$css = 'secondary';
+					//vaccancy logic
 					if ( (int)$row["Occupancy"] > (int)$row["Capacity"] ){
-						$status = '<span class="label warning">Overfilled</span>';
-
+						$css = 'warning';
 					}elseif ((int)$row["Occupancy"] == (int)$row["Capacity"]){
-						$status = '<span class="label success">Full</span>';
+						$css = 'success';
 					}
 
 					//logic to display occupants
@@ -771,7 +769,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 						
 						if ($occupantIds[$x] !== ""){
 
-							$names .= sprintf('<a href="#" data-id="%s" style="padding-right:5px;"><i class="fa fa-user"></i> %s</a>&nbsp;',
+							$names .= sprintf('<li><a href="details.php?id=%s" style="padding-right:5px;">
+												<i class="fa fa-user"></i> %s</a></li>',
 									$occupantIds[$x],
 									trim($occupantNames[$x]));
 
@@ -787,22 +786,25 @@ error_reporting(E_ALL & ~E_NOTICE);
 					$r->html .= sprintf('<tr>
 											<td>%s</td>
 											<td>%s</td>
-											<td>%s : %s %s<br/>%s</td>
-											<td>%s: %s</td>
+											<td rel="occupancy">
+												<span class="capacity label %s" title="%s">%s</span> <ul class="users-link">%s</ul>
+											</td>
+											<td rel="comments" data-availability="%s">%s</td>
 											<td style="width: 50px; text-align:right;white-space:nowrap;">
-											<button onclick="assignPersonToRoom(%s,%s)" class="button round small marginless"><i class="fa fa-check" aria-hidden="true"></i> assign</button>
+												<button onclick="assignPersonToRoom(%s,%s,%s)" class="button round small marginless"><i class="fa fa-check" aria-hidden="true"></i> assign</button>
 											</td>
 										</tr>', 
 											$row["RoomNumber"],
 											$row["RoomType"],
-											$row["Capacity"],
+											$css,
 											$row["Occupancy"],
-											$status, 
+											$row["Capacity"],
 											$names,
 											$row["IsAvailable"],
 											$row["Comments"],
 											$mid,
-											$row["RoomId"]);	
+											$row["RoomId"],
+											"'"  . urldecode($row["RoomNumber"]) . "'");
 				}
 				
 				$r->html = '<table role="grid" class="responsive display" id="table-rooms"><thead><tr><th>Number</th><th>Type</th><th>Capacity/Occupancy</th><th>Comments</th><th>&nbsp;</th></tr></thead><tbody>' . $r->html . '</tbody></table>';
@@ -874,6 +876,54 @@ error_reporting(E_ALL & ~E_NOTICE);
 	}
 
 
+	function removePersonsFromRoom($personIds){
+		//personIds is cooma delimtied string
+
+		//set the header
+		header('Content-Type: application/json');
+		$r = new RESPONSE(0);
+
+		//validate data
+		if ($personIds == ""){
+			$r->message = 'no data to process.' . $personIds;
+			echo $r->toJSON();
+			return false;
+		}
+
+		$ids = explode(",", $personIds);
+		if (count($ids) > 0){
+			
+			//create the database
+			$database = createDb();
+			foreach ($ids as $entry) {
+
+				if ($entry !== ""){
+					$database->delete("RoomAllocation", [
+						"MainContactId"    	=>  $entry,
+					]);
+				}
+			} // end each
+
+
+			//set the status for success
+			$r->status = 1;
+			$r->message = 'Person removed!';
+			
+
+			//end if
+		}else {
+
+			//set the status for success
+			$r->status = 0;
+			$r->message = 'No persons selected';
+		
+		}
+
+		//return json
+		echo $r->toJSON();				
+
+	}
+
 
 	/**
 	 * determine what request it is and assign appropiate action
@@ -881,6 +931,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 	if( $_GET['type'] == "notes"){
 
 		addNotes();
+
+	}elseif ($_GET['type'] == "remove-persons-from-room") {
+
+		removePersonsFromRoom($_POST['ids']);
 		
 	}elseif ($_GET['type'] == "list-rooms") {
 	

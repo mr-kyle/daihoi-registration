@@ -11,7 +11,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 		$datas = $database->query("
-			SELECT R.*, 
+			SELECT R.*, O.RoomNumber,
 					IFNULL((SELECT SUM(P.PaidAmount) FROM Payment P WHERE P.MainContactId = R.MainContactId), 0 ) as TotalPaid,
 				(
 				    SELECT GROUP_CONCAT(P.DateEntered SEPARATOR '; ')
@@ -27,6 +27,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 				) as AdminNotes
 				FROM MainContact R
+				LEFT OUTER JOIN RoomAllocation A ON A.MainContactId = R.MainContactId
+				LEFT OUTER JOIN Room O ON O.RoomId = A.RoomId;				
 			")->fetchAll();
 
 		$MainContactId = 0;
@@ -65,7 +67,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 											'<th>Firstname</th>' .
 											'<th>Surname</th>' .																						
 											'<th>Dates Paid</th>' .
-											'<th>Admin Notes</th></tr></thead>';
+											'<th>Admin Notes</th>' . 
+											'<th>Room Number</th></tr></thead>';
 
 
 
@@ -136,6 +139,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 							$html_body = $html_body . '<td>' .  $row["AdminNotes"] . '</td>' ;
 
+							$html_body = $html_body . '<td>' .  $row["RoomNumber"] . '</td>' ;
+
 							$html_body = $html_body . '</tr>';
 
 
@@ -151,10 +156,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 			// clean the output buffer
 			ob_clean();
-
-			header("Content-type:application/vnd.ms-excel");
+			header( "Content-type: application/vnd.ms-excel; charset=UTF-8");
 			header("Content-Disposition:attachment;filename='rego-export-" . $date->getTimestamp() .".xls'");
 			
+			echo pack("CCC",0xef,0xbb,0xbf);
 			echo '<table border="1">';
 			echo $html_header;
 			echo '<tbody>';

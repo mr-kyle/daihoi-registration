@@ -74,7 +74,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	$query = "SELECT  (SELECT COUNT(M.MainContactId) FROM MainContact M WHERE M.Cancelled = 0) TotalAttendance, 
 	(SELECT SUM(P.PaidAmount) FROM Payment P) TotalPaid,
-	(SELECT SUM(M.Fee) FROM MainContact M WHERE M.Cancelled = 0) TotalFees ;";
+	(SELECT SUM(M.Fee) FROM MainContact M WHERE M.Cancelled = 0) TotalFees,
+	(SELECT COUNT(*) FROM MainContact M INNER JOIN RoomAllocation A ON A.MainContactId = M.MainContactId WHERE M.Cancelled = 0) RoomAllocatedTotal,
+	(SELECT COUNT(*) FROM MainContact M WHERE M.Cancelled = 0 AND M.CheckedIn = 1) CheckedInTotal;";
 	$datas = $database->query($query)->fetchAll();
 
 
@@ -92,11 +94,24 @@ error_reporting(E_ALL & ~E_NOTICE);
 					  <div class="row">
 					  	<div class="medium-6 columns"><div class="panel-stats">Outstanding<br/>%s</div></div>
 					  	<div class="medium-6 columns"><div class="panel-stats">Airport Transfer<br/>%d</div></div>
+					  </div>
+					  <div>&nbsp;</div>
+					  <div class="row">
+					  	<div class="medium-6 columns"><div class="panel-stats">Persons Allocated<br/>%d</div></div>
+					  	<div class="medium-6 columns"><div class="panel-stats">Checked In<br/>%d</div></div>
 					  </div>', 
 		$datas[0]["TotalAttendance"], 
 		money_format('%#0n', $datas[0]["TotalPaid"]), 
 		money_format('%#0n', $datas[0]["TotalFees"]), 
-		$transfers[0]["AirportTransferTotal"]);
+		$datas[0]["AirportTransferTotal"],
+		$datas[0]["RoomAllocatedTotal"],
+		$datas[0]["CheckedInTotal"]
+	);
+
+	
+	//look up room allocations
+	$transfers = $database->query("SELECT COUNT(M.AirportTransfer) as AirportTransferTotal FROM MainContact M WHERE M.AirportTransfer = 1 AND M.Cancelled = 0")->fetchAll();
+	
 
  ?>
 

@@ -60,8 +60,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 		header('Content-Type: application/json');
 		$r = new RESPONSE(0);
 
-		//example JSON
-		//[{"type":"MainContactId","id":121,"checkin":false,"paid":"0"},{"type":"RegistrantId","id":194,"checkin":false,"paid":"0"}]
 		if (trim($json) == ""){
 			$r->message = 'no json data to process.';
 			echo $r->toJSON();
@@ -257,8 +255,8 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 				//get the old registrant info
-				$oldinfo = $database->select("Registrant", "*", [
-					"RegistrantId" => $id
+				$oldinfo = $database->select("MainContact", "*", [
+					"MainContactId" => $id
 				]);		
 					
 				//do the update
@@ -284,6 +282,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 				if ($rowsAffected > 0 ) {
 					$r->status = 1;
 
+
+
+
 					//we work out whats changed and update the db
 					addToAuditLog($ob , $oldinfo, $id, 'R');
 
@@ -291,6 +292,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 					if ($ob['Cancelled'] != $oldinfo[0]['Cancelled']){
 						$r->refresh=1;
 					}
+
+
+					//if it's a cancel rego request, we also remove the room allocations
+					if ($ob['Cancelled'] == "1" || $ob['Cancelled'] == 1){
+						removePersonsFromRoom($id, true);
+					}
+
 
 
 				}else{
@@ -399,6 +407,12 @@ error_reporting(E_ALL & ~E_NOTICE);
 					}
 
 
+					//if it's a cancel rego request, we also remove the room allocations
+					if ($ob['Cancelled'] == "1" || $ob['Cancelled'] == 1){
+						removePersonsFromRoom($id, true);
+					}					
+
+
 				}else{
 					$r->message .= "Nothing to update, record has existing information!";
 				}
@@ -499,12 +513,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 					"MainContactId" =>	$id,
 					"Cancelled" 	=>	false]
 				]);
-			
-			$total2 = $database->sum("Registrant", "Fee", [
-				"AND" => [
-					"MainContactId" =>	$id,
-					"Cancelled" 	=>	false]
-				]);
 
 
 			$payments = $database->sum("Payment", "PaidAmount", [
@@ -512,7 +520,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 				]);
 
 			//the balance calculation
-			$outstanding = ($total + $total2 - $payments);
+			$outstanding = ($total - $payments);
 
 			//we proceed only if the amount is less than the balance
 			if ( $ob['amount'] > $outstanding ){
@@ -574,12 +582,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 				"MainContactId" =>	$id,
 				"Cancelled" 	=>	false]
 			]);
-		
-		$total2 = $database->sum("Registrant", "Fee", [
-			"AND" => [
-				"MainContactId" =>	$id,
-				"Cancelled" 	=>	false]
-			]);
+
 
 		//get the admin notes
 		$datas = $database->select("Payment", "*", [
@@ -614,7 +617,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 			 $r->html .= sprintf('<tfoot><tr><td colspan="3"  style="text-align:right; padding-right:10px;">%s</td></tr></tfoot>',  money_format('%#0n', $runningTotal));
 
-			$outstanding = (($total + $total2) - $runningTotal );
+			$outstanding = (($total) - $runningTotal );
 
 			$r->html          .= '</tbody>';	
 			$r->status        = 1;
@@ -879,17 +882,22 @@ error_reporting(E_ALL & ~E_NOTICE);
 	}
 
 
-	function removePersonsFromRoom($personIds){
+	function removePersonsFromRoom($personIds, $supressMsg = false){
 		//personIds is cooma delimtied string
 
 		//set the header
-		header('Content-Type: application/json');
+		if (!$supressMsg) {
+			header('Content-Type: application/json');
+		}
+
 		$r = new RESPONSE(0);
 
 		//validate data
 		if ($personIds == ""){
 			$r->message = 'no data to process.' . $personIds;
-			echo $r->toJSON();
+			if (!$supressMsg) {
+				echo $r->toJSON();
+			}
 			return false;
 		}
 
@@ -923,7 +931,9 @@ error_reporting(E_ALL & ~E_NOTICE);
 		}
 
 		//return json
-		echo $r->toJSON();				
+		if (!$supressMsg) {
+			echo $r->toJSON();
+		}				
 
 	}
 
@@ -937,7 +947,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	}elseif ($_GET['type'] == "remove-persons-from-room") {
 
-		removePersonsFromRoom($_POST['ids']);
+		removePersonsFromRoom($_POST['ids'], false);
 		
 	}elseif ($_GET['type'] == "list-rooms") {
 	
@@ -981,7 +991,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 			
 			header('Content-Type: application/json');
 			$r = new RESPONSE(0);
-			$r->message = 'No json data!!' . $_POST['type'] . 'XXXS';
+			$r->message = 'No json data!!' . $_POST['type'];
 			echo $r->toJSON();	
 		}
 	}

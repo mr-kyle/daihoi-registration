@@ -420,9 +420,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	    function setOptionText(id, text){
 
-	        var dd = document.getElementById(id);
+          var dd = document.getElementById(id);
 	        for (var i = 0; i < dd.options.length; i++) {
-	            if (dd.options[i].text === text) {
+              var match = dd.options[i].text.replace(/ /gi,"") == text.replace(/ /gi,"");
+	            if (match) {
 	                dd.selectedIndex = i;
 	                break;
 	            }
@@ -471,7 +472,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 	        $("#json").html(JSON.stringify(r)).show();
 
-	        sendData(JSON.stringify(r), <?php echo ($MainContactId == "") ? 0 : $MainContactId ; ?>, "update-registrant");
+	        sendUpdateData(JSON.stringify(r), <?php echo ($MainContactId == "") ? 0 : $MainContactId ; ?>, "update-registrant");
 	    }
 
 	    function getMainContact(){
@@ -497,12 +498,12 @@ error_reporting(E_ALL & ~E_NOTICE);
 	        $("#json").html(JSON.stringify(r)).show();
           //toTable(r);
 
-	        sendData(JSON.stringify(r), <?php echo ($MainContactId == "") ? 0 : $MainContactId ; ?>, "update-maincontact");
+	        sendUpdateData(JSON.stringify(r), <?php echo ($MainContactId == "") ? 0 : $MainContactId ; ?>, "update-maincontact");
 
 	    }
 
 
-	    function sendData(json, id, type){
+	    function sendUpdateData(json, id, type){
 	        $("#callout-alert").hide();
 	        $("#callout-success").hide();
 
@@ -517,7 +518,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 	            $("#callout-success").slideDown();
 	            if (data.refresh == 1) {
 	            	setTimeout("location.reload()",500);
-				}
+				      }
 	          }else{
 	            $("#callout-alert").slideDown().find("p:first").text(data.message);
 	          }

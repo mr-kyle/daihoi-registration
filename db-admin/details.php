@@ -116,7 +116,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 			$query = "SELECT M.*, A.RoomId, R.RoomNumber FROM MainContact M 
 			LEFT OUTER JOIN RoomAllocation A ON A.MainContactId = M.MainContactId
 			LEFT OUTER JOIN Room R ON R.RoomId = A.RoomId
-			WHERE M.MainContactId = " . $id ."  OR M.GroupLeaderMainContactId = " . $id . "
+			WHERE M.MainContactId = " . $id ."  OR M.GroupLeaderMainContactId = " . $id . " 
 			ORDER BY IFNULL(GroupLeaderMainContactId,0), M.MainContactId ";
 
 

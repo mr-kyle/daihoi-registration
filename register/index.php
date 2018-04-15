@@ -787,7 +787,7 @@
                 <div style="    display: block;    position: relative;">
                     <h3>Attention</h3>
                     <p>This alert box could indicate a warning that might need attention.</p>
-                    <p class="text-right"><input type="button" class="btn btn-primary btn-sm" onclick="javascript:void(0); $('#callout').hide();" value="OK, I Understand" /></p>
+                    <p class="text-right"><input type="button" class="btn btn-primary btn-sm" onclick="javascript:void(0); $('#callout').hide();" value="OK" /></p>
                 </div>
                 <div class="clearfix"></div>
             </div>

@@ -866,6 +866,24 @@ error_reporting(E_ALL & ~E_NOTICE);
 			return false;
 		}
 
+
+		//dont assigned if cancelled
+		$datas = $database->select("MainContact", "*", [
+			"AND" => [
+				"MainContactId" => $personId,
+				"Cancelled" => true
+			]
+		]);
+				
+		if(count($datas) > 0){
+			$r->status = 0;
+			$r->message = 'Person cancelled, cannot allocate.';
+			echo $r->toJSON();
+			return false;
+		}
+
+
+		
 		//do insert if allowed
 		$database->insert("RoomAllocation", [
 			"RoomId"    		=>  $roomId,

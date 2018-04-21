@@ -80,7 +80,7 @@ function renderAnyTable(id, callback){
             
             if (typeof callback == "function") {
                 // Call it, since we have confirmed it is callable​
-                //callback();
+                callback();
             }
         },  
         iDisplayLength: 10,

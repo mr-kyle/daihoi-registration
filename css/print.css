@@ -19,21 +19,35 @@
             background-color: #fff !important;
         }
 
+        .table-responsive {
+            padding: 10px;
+        }
+
+
+        #rego-summary th, 
         #rego-summary td, 
         #rego-summary div, 
         #rego-summary p, 
         #rego-summary li {
-            color:#000;
+            color:#000 !important;
+
+        }
+        #rego-summary th {
+            border:none !important;
         }
 
-        #payment-summary .panel-default {
-            background-color: #fff !important;
-        }         
 
-        #rego-summary .well {
-            background-color: #fff !important;
-            color:black;
+        #rego-summary td:first-child,
+        #rego-summary td:last-child,
+         {
+            border:0px none white !important;   
         }
+        
+        #payment-summary .bank-info {
+            background-color: #fff !important;
+        }
+
+
 
 
 	}

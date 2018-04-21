@@ -538,15 +538,22 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 <div id="roomsModal" class="reveal full" data-reveal  aria-hidden="true" role="dialog">
 	<h3>Room<span class="label1" id="room-fullname"></span></h3>
-	<div id="rooms-container"></div>
+	<div style="position: relative;">
+		<div id="rooms-container"></div>
+
+	<div id="rooms-overlay" style="">
+		&nbsp;
+		<h3 class="loading-text">Fetching rooms...</h3>
+	</div>
+
+	</div>
 	<div style="width:100%; text-align:center;">
-	<button class="button small secondary" style="width:150px;" data-close aria-label="Close reveal" type="button">
-		Close
-	</button>
+	<button class="button small secondary" style="width:150px;" data-close aria-label="Close reveal" type="button">Close<button>
 	</div>
 	<button class="close-button" data-close aria-label="Close reveal" type="button" id="buttonRoomsClose">
 		<span aria-hidden="true">&times;</span>
 	</button>
+
 
 </div>
 

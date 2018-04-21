@@ -26,14 +26,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
         td.cancelled { text-decoration: line-through; color: maroon; }
         .view-only { display: block !important; }
-        #summary-content, #summary-content td, #summary-content th, #summary-content p, #summary-content li {
-            color:#f7f7f7 !important;
-        }
 
-
-        #summary-content input[type=text] {
-            background-color:white !important;
-        }
 	</style>
 
 </head>

@@ -110,7 +110,7 @@
             
 
         #rego-summary table td, #rego-summary table th {
-            border:none !important;
+            border:none ;
         }
 
 
@@ -146,17 +146,32 @@
             background-color: transparent !important;
             background-color: rgba(0,0,0,0) !important; 
         }
+
+        #summary-content, #summary-content td, #summary-content th, #summary-content p, #summary-content li {
+            color:#f7f7f7 !important;
+        }
+
+
+        #summary-content input[type=text] {
+            background-color:white !important;
+        }        
             
 
         
 
         div#summary-content table, 
         div#summary-content .panel-body table {
-            border-top: 1px solid #DF691A !important;
             border-collapse: initial;
             border-spacing: 2px;
             border: none;
         }
+
+
+
+        div#summary-content table caption {
+            border-bottom: 1px solid #DF691A !important
+        }
+
 
         div#summary-content table caption {
             color: #CAAB71;

@@ -72,9 +72,17 @@ function renderTable(){
 }
 
 
-function renderAnyTable(id){
+function renderAnyTable(id, callback){
     $('#' + id).DataTable({
          "lengthMenu": [[10, 25, 50, 100, -1], [10, 25, 50, 100, "All"]],
+         "initComplete": function(settings, json) {
+
+            
+            if (typeof callback == "function") {
+                // Call it, since we have confirmed it is callable​
+                //callback();
+            }
+        },  
         iDisplayLength: 10,
         repsonsive:true,
         destroy: true
@@ -401,10 +409,11 @@ function closeCallOuts(){
 }
 
 
-function listRooms(targetEl, personId){
+function listRooms(targetEl, personId, callback){
 
     closeCallOuts();
     document.getElementById("room-fullname").innerText = "";
+    $("#rooms-overlay").show();
 
     //$("#json").html(JSON.stringify(payment));
     $.ajax({
@@ -418,7 +427,9 @@ function listRooms(targetEl, personId){
     .done(function(data) {
         if (data.status == 1){
             targetEl.innerHTML = data.html;
-            renderAnyTable('table-rooms');
+            renderAnyTable('table-rooms', function(){
+                $("#rooms-overlay").hide();
+            });
             document.getElementById("room-fullname").innerText = " allocation for: " + data.info;
 
         }else{

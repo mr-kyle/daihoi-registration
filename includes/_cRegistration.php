@@ -1132,7 +1132,6 @@
 									}
 
 
-
 									//replace the js functions
 
 									$html  = str_replace("SUBMISSION.submitRegistration(this)","window.print();",$html);
@@ -1143,7 +1142,12 @@
 
 									$html  = str_replace("{REFERENCE}",$ref,$html);
 
+									$html  = str_replace( "{URL}", AppConfig::$SITE_URL, $html);
 
+
+									$shortURL = str_replace("https://","", AppConfig::$SITE_URL);
+									$shortURL = str_replace("http://","",  $shortURL);
+									$html  = str_replace( "{SHORT-URL}", $shortURL, $html);
 
 
 									//user payment logic

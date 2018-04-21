@@ -9,14 +9,13 @@
             <div>
              
 
-                <img style="float: left; margin: 0 10px 10px 10px;" src="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl=melbourne2016.net.au/register/view?ref={REFERENCE}&choe=UTF-8&chld=Q|0" align="left" />
+                <img style="float: left; margin: 0 10px 10px 10px;" src="https://chart.googleapis.com/chart?chs=120x120&cht=qr&chl={SHORT-URL}/register/view?ref={REFERENCE}&choe=UTF-8&chld=Q|0" align="left" />
 
                 <p>
-
-                    You can view your registration at anytime using the following link <a href="http://christianconference.org.au/register/view/?ref={REFERENCE}">http://christianconference.org.au/</a>, along with your reference: <b>{REFERENCE}</b>
-
-                    <p> For those more technology adept, you can use the QR Code on the left.</p>
-
+                    To view your registration at: <a href="{URL}/register/view/?ref={REFERENCE}">{URL}</a>
+                    <br/>
+                    Please use your reference: <b>{REFERENCE}</b>
+                    
                 </p>
 
                 <div class="clearfix">&nbsp;</div>            
@@ -168,17 +167,6 @@
 
             <div class="panel-body">
 
-                <!-- 
-                <div class="row earlybird-panel">
-                    <div class="col-md-12 col-lg-12 center-block text-center">
-                        <div class="alert alert-info" style="background-color: rgba(139, 195, 74,0.80) !important; border-radius: 10px; padding:10px;">
-                            <i class="fa fa-heart fa-x2" aria-hidden="true" style="color:#C85E17"> </i>
-                            <strong style="color:#C85E17">Early Bird</strong> 
-                            <p style="font-weight: normal;">Complete your registration along with <span style="border-bottom:2px solid #000;">full payment before</span> Friday 30th September 2016, and receive up to $40 discount off each person registered. (except for kid 5 year old or under)</p>
-                        </div>
-                    </div>
-                </div>
-                -->
 
                 <div class="row">
 
@@ -272,20 +260,13 @@
                                     <th>&nbsp;</th>
                                 </tr>
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <td>                        Bus transfer from and to airport on the 27th and the 31st will be provided. $25 separate fee applies per person (both ways). Please select <b>Airport Transfer</b> when you register.</td>
+                                </tr>
+                            </tbody>                            
                         </table>
-                        <p>Bus transfer from and to airport on the 27th and the 31st will be provided. $25 separate fee applies per person (both ways). Please select <b>Airport Transfer</b> when you register.</p>
 
-                        <!-- <div>
-
-                            <span class="label label-warning">IMPORTANT</span>
-                            <p>
-                                Bus transfers from Tullamarine Airport are scheduled at 8am and 2pm on 27th Dec 2016. No pick up can be made from airport after 2pm.
-                            </p>
-                            <p>
-                                Airport transfers from and to airport on the 27th and the 31st can be arranged if required – booking before December required and separate fees applied.
-                            </p>
-
-                        </div> -->
 
                         <div>&nbsp;</div>
                     </div>                    
@@ -293,14 +274,18 @@
 
 
                     <div class="col-md-6 col-lg-6">
-                        <table class="table table-responsive table-bordered table-striped" style="margin-bottom:10px">
+                        <table class="table table-responsive table-bordered table-striped" style="margin-bottom:10px; display: none">
                             <caption>Accomodation</caption>
                             <thead>
                                 <tr>
                                     <th>&nbsp;</th>
                                 </tr>
-
                             </thead>
+                            <tbody>
+                                <tr>
+                                    <td>test</td>
+                                </tr>
+                            </tbody>
                         </table>
 
                     </div>

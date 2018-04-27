@@ -242,6 +242,7 @@
                                 <p>Please include your Main Contact Name and Reference number in the payment.</p>
 
                                 <?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_bankdetails.php");?>
+                                
 
                             </div>
 
@@ -262,12 +263,17 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>                        Bus transfer from and to airport on the 27th and the 31st will be provided. $25 separate fee applies per person (both ways). Please select <b>Airport Transfer</b> when you register.</td>
+                                    <td>
+                                        <?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_airport-info.php");?>
+                                    </td>
                                 </tr>
                             </tbody>                            
                         </table>
-
-
+                        <div>&nbsp;</div>
+                        <ul>
+                            <li>website: christianconference.org.au</li>
+                            <li>email: info@christianconference.org.au</li>
+                        </ul>
                         <div>&nbsp;</div>
                     </div>                    
 
@@ -275,7 +281,7 @@
 
                     <div class="col-md-6 col-lg-6">
                         <table class="table table-responsive table-bordered table-striped" style="margin-bottom:10px; display: none">
-                            <caption>Accomodation</caption>
+                            <caption><!-- Accomodation --></caption>
                             <thead>
                                 <tr>
                                     <th>&nbsp;</th>
@@ -283,7 +289,7 @@
                             </thead>
                             <tbody>
                                 <tr>
-                                    <td>test</td>
+                                    <td>&nbsp;</td>
                                 </tr>
                             </tbody>
                         </table>

@@ -55,7 +55,7 @@ error_reporting(E_ALL & ~E_NOTICE);
     <div class="row">
     	<div class="medium-12 columns">
     		
-          <h1><?php echo ($IsMainContact) ? 'Main Contact' : 'Registrant' ?> Details</h1>
+          <h1><a class="btn" href="details.php?id=<?php echo $MainContactId ?>"><<</a> <?php echo ($IsMainContact) ? 'Main Contact' : 'Registrant' ?> Details</h1>
 
           <?php 
             if ($IsDisabledHtml !== ""){

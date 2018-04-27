@@ -510,9 +510,14 @@ error_reporting(E_ALL & ~E_NOTICE);
 			//check to see the balance
 			$total = $database->sum("MainContact", "Fee", [
 				"AND" => [
-					"MainContactId" =>	$id,
-					"Cancelled" 	=>	false]
-				]);
+					"OR" => [
+						"MainContactId" =>	$id,
+						"GroupLeaderMainContactId" => $id
+					],
+					"Cancelled" 	=>	false
+				]
+			]);
+
 
 
 			$payments = $database->sum("Payment", "PaidAmount", [
@@ -578,10 +583,14 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 		//check to see the balance
 		$total = $database->sum("MainContact", "Fee", [
-			"AND" => [	
-				"MainContactId" =>	$id,
-				"Cancelled" 	=>	false]
-			]);
+			"AND" => [
+				"OR" => [
+					"MainContactId" =>	$id,
+					"GroupLeaderMainContactId" => $id
+				],
+				"Cancelled" 	=>	false
+			]
+		]);
 
 
 		//get the admin notes
@@ -726,14 +735,6 @@ error_reporting(E_ALL & ~E_NOTICE);
 		//init variables
 		$r = new RESPONSE(0);
 
-		//validate the id and data
-		// if ($id == "" || $id < 1){
-		// 	$r->message = "No data.";
-		// 	echo $r->toJSON();	
-		// 	return false;
-		// }
-
-		//$html = file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/register/summary_template.php");
 
 		$mid = $_GET['id']; //person to assgin room to
 

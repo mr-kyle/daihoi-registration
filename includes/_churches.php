@@ -68,4 +68,4 @@
 <option data-state="WA">Hội Thánh Cơ Đốc Vĩnh Hằng (Bap) WA</option>
 <option data-state="WA">Hội Thánh Tin Lành Việt Nam Perth (CMA) WA</option>
 <option data-state="WA">Hội Thánh Tin Lành Việt Nam Perth (VECA) WA</option>
-<option data-state="WA,TAS,QLD,VIC,SA,NT,NSW,ACT">Other</option>
+<option data-state="WA,TAS,QLD,VIC,SA,NT,NSW,ACT,NA">Other</option>

@@ -2,7 +2,7 @@
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/_cMail.php');?>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/_cSms.php');?>
 <?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/_cFee.php');?>
-
+<?php require_once $_SERVER['DOCUMENT_ROOT'] . '/db-admin/_money_format.php' ?>
 
 	<?php
 
@@ -1187,9 +1187,8 @@
 									}
 
 
-									$html  = str_replace('<?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_bankdetails.php");?>',
-										file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/includes/_bankdetails.php"),$html);
-
+									$html  = str_replace('<?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_bankdetails.php");?>', file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/includes/_bankdetails.php"),$html);
+									$html  = str_replace('<?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_airport-info.php");?>', file_get_contents($_SERVER['DOCUMENT_ROOT'] . "/includes/_airport-info.php"),$html);
 
 									$output = $html;
 									

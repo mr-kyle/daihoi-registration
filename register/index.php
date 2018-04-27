@@ -50,7 +50,7 @@
                             <div class="col-md-6 ">
 
                                 <h4><i class="fa fa-plane text-info"> </i> Airport transfers </h4>
-                                <p>Bus transfer from and to airport on the 27th and the 31st will be provided. $25 separate fee applies per person (both ways). Please select <b>Airport Transfer</b> when you register.</p>
+                                <?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_airport-info.php");?>
                                 <div>&nbsp;</div>
 
                             </div>
@@ -220,10 +220,7 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <p>On Thursday, 27 December, there will be scheduled buses to pick you up from Tullamarine Airport to Đại Hội campus. Buses departure 10:00AM and 3:00PM from Tullamarine Airport.</p>
-                                                <p>On Monday, 31 December, there will be buses to take you from campus back to Tullamarine Airport.</p>
-                                                <p>Buses departure 11:00 AM (arriving Tullamarine Airport 1:30PM), and 5:00PM (arriving Tullamarine Airport 7:30pm)</p>
-                                                <p>The cost is AUD 25 per person per round trip. Please select <b>Airport Transfer</b> when you register.</p>
+                                                <?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_airport-info.php");?>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -445,6 +442,7 @@
                                                 <option value="TAS">TAS</option>
                                                 <option value="ACT">ACT</option>
                                                 <option value="NT">NT</option>
+                                                <option value="NA">Other</option>
                                             </select> 
                                     </div>
 

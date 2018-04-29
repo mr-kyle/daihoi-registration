@@ -196,8 +196,10 @@
                                         </tr>
                                         <tr>
 
-                                            <td>2nd child thereafter 6 y.o and above</td>
-                                            <td class="standard-price text-right">$100</td>
+                                            <td>2nd child thereafter 6 y.o and above<br>
+                                                ($100 off from Standard Fee)
+                                            </td>
+                                            <td class="standard-price text-right">$100 off</td>
                                         </tr>
 
                                     </tbody>

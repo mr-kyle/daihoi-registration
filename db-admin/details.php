@@ -6,11 +6,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 <html class="no-js" lang="en">
 <head>
     <?php require '_scripts.php' ?>
-
 	<title>Registration Details</title>
-	<script>
-		var REGO_ID = <?php echo $_GET['id']; ?>;	
-	</script>
 	<style>
 		#table-rooms td {padding:3px 10px;}
 		#table-rooms tr:hover > td { font-weight:bold;}
@@ -52,6 +48,11 @@ error_reporting(E_ALL & ~E_NOTICE);
 	require '_db.php';
 	//holds the admin notes
 	$admin_notes = 'tt';
+	$REGO_ID = $_GET['id'];
+
+
+	ListRegos( $REGO_ID );
+
 
 	function ListRegos($id = 0){
 
@@ -111,7 +112,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 			$gId = (int)$datas[0]["Id"];
 			if ($gId > 0) { $id = $gId; }
 
-
+ 
 			//at this point the $id should be the group leader
 			$query = "SELECT M.*, A.RoomId, R.RoomNumber FROM MainContact M 
 			LEFT OUTER JOIN RoomAllocation A ON A.MainContactId = M.MainContactId
@@ -327,7 +328,23 @@ error_reporting(E_ALL & ~E_NOTICE);
 	}
 
 
-	ListRegos($_GET["id"] );
+
+	function getGroupLeaderId($id){
+
+		
+		$database = createDb();
+
+		//check if the id given is the group leader
+		$query = "SELECT (IFNULL(GroupLeaderMainContactId,0)) Id FROM MainContact WHERE MainContactId = " . $id . ";";
+		$datas = $database->query($query)->fetchAll();
+		if (count($datas) > 0){
+			//if not the group leader, we will use the assigned (db) group leader id
+			$gId = (int)$datas[0]["Id"];
+			if ($gId > 0) { $id = $gId; }
+			return $id;
+		}
+		return 0;
+	}
 
 ?>
 
@@ -565,10 +582,12 @@ error_reporting(E_ALL & ~E_NOTICE);
 	<?php require '_scripts_startup.php' ?> 
 
 	<script src="js/responsive-tables.js?v=20180301"></script>
-
+	<script>
+		
+	</script>
 
 	<script type="text/javascript">
-		
+		var REGO_ID = <?php echo getGroupLeaderId($REGO_ID) ?>;	
 		function createTT(){
 			//$("#table-payments span.has-tip").each(function (index, el) {
 				//var tt = new Foundation.Tooltip('.has-tip');

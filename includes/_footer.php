@@ -15,6 +15,7 @@
                         <li><a href="/">Home</a></li>
                         <li><a href="/register/">Registration</a></li>
                         <li><a href="/register/view">View Registration</a></li>
+                        <li><a href="/privacy-policy/">Privacy Policy</a></li>
                     </ul>
                     <div>&nbsp;</div> 
                 </div>
@@ -30,6 +31,6 @@
     </div>
     <div class="container-fluid1 no-print" style="background: #333; color:white;">
         <div class="container" style="padding: 20px 10px;">
-            <p style="text-align:center;">&copy; 2018 | Vietnamese Christians Fellowship Conference in Australia - Melbourne 2018</p>
+            <p style="text-align:center;">Vietnamese Christian Fellowship Conference in Australia - Melbourne &copy; 2018</p>
         </div>
     </div>

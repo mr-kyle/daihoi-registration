@@ -50,7 +50,8 @@
                             <div class="col-md-6 ">
 
                                 <h4><i class="fa fa-plane text-info"> </i> Airport transfers </h4>
-                                <?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_airport-info.php");?>
+                                There is bus transfer services from Melbourne Airport to the Conference and vice versa.
+                                <br>Please select Airport Transfer when you register.
                                 <div>&nbsp;</div>
 
                             </div>
@@ -723,13 +724,10 @@
                                     <div class="panel-body">
                                         <p>Please enter:</p>
                                         <ul>
-
-                                            <li>dietary requests,</li>
-                                            <li>airport information for transfer </li>
-                                            <li>flight number, times, etc</li>
+                                            <li>Dietary special requests</li>
+                                            <li>air flight number and times if airport tranfer required</li>
                                             <li>special needs</li>
                                             <li>disability requirements</li>
-
                                         </ul>                                        
                                     </div>
 

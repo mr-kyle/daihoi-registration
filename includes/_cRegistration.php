@@ -1518,13 +1518,13 @@
 
 								if ( substr($rego->Phone,0,5) == "+6104" || substr($rego->Phone,0,4) == "+614") {
 
-							        $sms = new SMS();
+							        $sms = new SMSBroadcast();
 
 							        if($sms->access_token){
 							            $messageId =  $sms->send($rego->Phone, 
 							            	//http://tinyurl.com/h4glqrk?ref=1
 							            	//http://goo.gl/asxolc
-							            	'Hi ' . $rego->Firstname . ', your ref: ' . $ref  .'. View your rego @ ' . AppConfig::$TINYURL_VIEW .'?ref=' . $ref . '\n\nDaiHoi Melbourne' . AppConfig::$CONFERENCE_YEAR . ' Team.'); 
+							            	'Hi ' . $rego->Firstname . ', your ref: ' . $ref  .'. View your rego @ ' . AppConfig::$TINYURL_VIEW .'?ref=' . $ref . '%0D%0A%0D%0ADaiHoi Melbourne' . AppConfig::$CONFERENCE_YEAR . ' Team.'); 
 
 							            if($messageId){
 

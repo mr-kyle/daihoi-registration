@@ -667,13 +667,13 @@ error_reporting(E_ALL & ~E_NOTICE);
 						if ( substr($phone,0,5) == "+6104" || substr($phone,0,4) == "+614") {
 
 							//create a SMS object
-					        $sms = new SMSAdmin();
+					        $sms = new SMSBroadcast();
 
 					        //check the token
 					        if($sms->access_token){
 
 					        	//send the SMS
-					            $messageId = $sms->send($phone, 'Your rego has been updated @ ' . AppConfig::$TINYURL_VIEW .'?ref=' . $ref . '\n\nDaiHoi Melbourne' .  AppConfig::$CONFERENCE_YEAR . ' Team.'); 
+					            $messageId = $sms->send($phone, 'Your rego has been updated @ ' . AppConfig::$TINYURL_VIEW .'?ref=' . $ref . '%0D%0A%0D%0ADaiHoi Melbourne' .  AppConfig::$CONFERENCE_YEAR . ' Team.'); 
 
 					            if($messageId){
 					            	//$rego->updateSMSMessageId($rego->Reference, $messageId);

@@ -51,15 +51,15 @@ error_reporting(E_ALL & ~E_NOTICE);
 											'<th>Email</th>' .
 											'<th>Phone</th>' .																						
 											'<th>Church</th>' .
-											'<th>FamilyDiscount</th>' .
+											'<th>Family Discount</th>' .
 											'<th>Airbed</th>' .
-											'<th>AirportTransfer</th>' .																						
+											'<th>Airport Transfer</th>' .																						
 											'<th>Relation</th>' .
 											'<th>Fee</th>' .
-											'<th>DateTimeEntered</th>' .
+											'<th>Date Time Entered</th>' .
 											'<th>Comments</th>' .																						
-											'<th>CheckedIn</th>' .
-											'<th>PaidAmount</th>' .
+											'<th>Checked In</th>' .
+											'<th>Paid Amount</th>' .
 											'<th>Cancelled</th>' .
 											'<th>Pensioner</th>' .																						
 											'<th>Role</th>' .
@@ -111,7 +111,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 							$html_body = $html_body . '<td>' . ToYesNo($row["AirportTransfer"]) . '</td>' ;
 
-							$html_body = $html_body . '<td>' .  '</td>' ;
+							$html_body = $html_body . '<td>' . $row["Relation"] . '</td>' ;
 
 							$html_body = $html_body . '<td>' .  $row["Fee"] . '</td>' ;
 

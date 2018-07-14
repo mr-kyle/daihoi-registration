@@ -26,7 +26,10 @@
 			$query = "SELECT M.*, 
 			(SELECT COUNT(R.MainContactId) 
 			FROM MainContact R 
-			WHERE R.GroupLeaderMainContactId = M.MainContactId) as OtherRegistrants 
+			WHERE R.GroupLeaderMainContactId = M.MainContactId AND R.Cancelled = 0) as OtherRegistrants,
+			(SELECT SUM(IFNULL(T.Fee,0)) 
+			FROM MainContact T 
+			WHERE T.GroupLeaderMainContactId = M.MainContactId AND T.Cancelled = 0) As OtherFees			
 			FROM MainContact M 
 			WHERE M.GroupLeaderMainContactId IS NULL
 			ORDER BY M.MainContactId DESC";
@@ -48,14 +51,14 @@
 				<th>Phone</th>
 				<th>Church</th>
 				<th>Airport</th>
-				<th>Fee</th>
+				<th>Total Fee</th>
 				<th>Registered</th>
 				<th>Others</th>
 			</tr></thead><tbody>';
 
 			foreach($datas as $row){
-				
-
+					$otherFees = (is_numeric($row["OtherFees"]) ? $row["OtherFees"] : 0);
+					$totalFees = intVal($row["Fee"]) + intVal($otherFees);
 					echo sprintf('
 									<tr>
 										<td><a href="details.php?id=%d">%s</a></td>
@@ -77,7 +80,7 @@
 								, $row["Phone"]
 								, $row["Church"]
 								, ToYesNo($row["AirportTransfer"])
-								, $row["Fee"]
+								, $totalFees
 								, $row["DateTimeEntered"]
 								, $row["OtherRegistrants"]
 								

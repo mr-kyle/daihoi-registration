@@ -29,7 +29,8 @@
 			WHERE R.GroupLeaderMainContactId = M.MainContactId AND R.Cancelled = 0) as OtherRegistrants,
 			(SELECT SUM(IFNULL(T.Fee,0)) 
 			FROM MainContact T 
-			WHERE T.GroupLeaderMainContactId = M.MainContactId AND T.Cancelled = 0) As OtherFees			
+			WHERE T.GroupLeaderMainContactId = M.MainContactId AND T.Cancelled = 0) As OtherFees,
+			IFNULL((SELECT SUM(P.PaidAmount) FROM Payment P WHERE P.MainContactId = M.MainContactId), 0 ) as TotalPaid		
 			FROM MainContact M 
 			WHERE M.GroupLeaderMainContactId IS NULL
 			ORDER BY M.MainContactId DESC";
@@ -46,12 +47,11 @@
 			<tr>
 				<th>Name</th>
 				<th>Reference</th>
-				<th>Age</th>
 				<th>Email</th>
 				<th>Phone</th>
 				<th>Church</th>
-				<th>Airport</th>
 				<th>Total Fee</th>
+				<th>Outstanding Amount</th>
 				<th>Registered</th>
 				<th>Others</th>
 			</tr></thead><tbody>';
@@ -59,6 +59,7 @@
 			foreach($datas as $row){
 					$otherFees = (is_numeric($row["OtherFees"]) ? $row["OtherFees"] : 0);
 					$totalFees = intVal($row["Fee"]) + intVal($otherFees);
+					$totalPaid = intVal($row["TotalPaid"]);
 					echo sprintf('
 									<tr>
 										<td><a href="details.php?id=%d">%s</a></td>
@@ -66,8 +67,7 @@
 										<td>%s</td>
 										<td>%s</td>
 										<td>%s</td>
-										<td>%s</td>
-										<td>%s</td>
+										<td>%01.2f</td>
 										<td>%01.2f</td>
 										<td>%s</td>
 										<td>%d</td>
@@ -75,12 +75,12 @@
 								, $row["MainContactId"]
 								, $row["FullName"]
 								, $row["Reference"]
-								, $row["Age"]
 								, $row["Email"]
 								, $row["Phone"]
 								, $row["Church"]
-								, ToYesNo($row["AirportTransfer"])
+								//, ToYesNo($row["AirportTransfer"])
 								, $totalFees
+								, ($totalFees - $totalPaid)
 								, $row["DateTimeEntered"]
 								, $row["OtherRegistrants"]
 								

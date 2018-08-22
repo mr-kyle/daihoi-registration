@@ -23,6 +23,7 @@
 <option data-state="NSW">Hội Thánh Tin Lành Việt Nam Cabramatta (VECA) NSW</option>
 <option data-state="NSW">Hội Thánh Tin Lành Việt Nam Marrickville (VECA) NSW</option>
 <option data-state="NSW">Hội Thánh Tin Lành Việt Nam Wollongong (VECA) NSW</option>
+<option data-state="NSW">Hội Thánh New Way (Bap) NSW</option>
 <option data-state="NZ">Hội Thánh Tin Lành Việt Nam Auckland (IND) NZ</option>
 <option data-state="QLD">Hội Thánh Báp-tít Việt Anh Brisbane (Bap) QLD</option>
 <option data-state="QLD">Hội Thánh Tin Lành Ân Điển Việt Nam Brisbane (Bap) QLD</option>

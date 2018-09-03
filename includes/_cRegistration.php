@@ -232,7 +232,7 @@
 			function isValid(){ //checks if object is valid, usally after parseJSON
 
 				//Name and Age is required and age must be a number
-				$res = !($this->FullName() == "" || $this->Age == "" || is_numeric($this->Age) == false || $this->Email == "" || $this->Phone == "");
+				$res = !($this->FullName() == "" || is_numeric($this->Age) == false || $this->Email == "" || $this->Phone == "");
 
 				if ($res == false){
 
@@ -1467,6 +1467,7 @@
 				*/
 
 				$json = $_POST["json"];
+
 
 				if( $json || $_POST["reference"] ) {
 

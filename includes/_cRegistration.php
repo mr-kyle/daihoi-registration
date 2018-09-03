@@ -46,7 +46,7 @@
 				function isValid(){
 
 					//Name and Age is required and age must be a number
-					return !($this->FullName() == "" || $this->Age == "" || is_numeric($this->Age) == false) ;
+					return !($this->FullName() == "" || is_numeric($this->Age) == false) ;
 
 				}
 
@@ -383,6 +383,7 @@
 						$newPerson->Role            = $member['Role'];
 
 						$newPerson->Pensioner       = ($member['Pensioner'] == '' ? 0 : $member['Pensioner']);
+
 
 
 						if ($newPerson->isValid()) {
@@ -1496,11 +1497,9 @@
 						}						
 
 
-
 						//$out = new OUTPUTj(0,"","Registration is temporarily unavailable!"); 
 						//echo $out->toJSON();
 						//return false;
-
 						//$rego->toString();
 
 						if ($rego->commitDB()){
@@ -1513,8 +1512,6 @@
 								//we try this as we dont want to show error if sms fails
 								//we still want to show the registration information
 								//check for aussie mobile prefix
-
-
 
 								if ( substr($rego->Phone,0,5) == "+6104" || substr($rego->Phone,0,4) == "+614") {
 
@@ -1529,7 +1526,6 @@
 							            if($messageId){
 
 							            	$rego->updateSMSMessageId($rego->Reference, $messageId);
-
 
 							            }
 
@@ -1585,8 +1581,6 @@
 			   }
 
 		}
-
-
 
 
 	?>

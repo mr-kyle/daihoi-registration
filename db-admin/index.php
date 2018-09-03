@@ -103,7 +103,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 		$datas[0]["TotalAttendance"], 
 		money_format('%#0n', $datas[0]["TotalPaid"]), 
 		money_format('%#0n', $datas[0]["TotalFees"]), 
-		$datas[0]["AirportTransferTotal"],
+		$transfers[0]["AirportTransferTotal"],
 		$datas[0]["RoomAllocatedTotal"],
 		$datas[0]["CheckedInTotal"]
 	);

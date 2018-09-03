@@ -33,7 +33,7 @@
             </li>
 
             <li>
-                Nếu quý vị bị từ chối Visa để đến Úc, xin vui lòng gởi cho chúng tôi thư từ chối từ Toà Lãnh Sự Úc <strong>trước ngày 16/11/2018</strong>>. Ban Tổ Chức sẽ hoàn lại trọn số tiền quý vị đã đóng.
+                Nếu quý vị bị từ chối Visa để đến Úc, xin vui lòng gởi cho chúng tôi thư từ chối từ Toà Lãnh Sự Úc <strong>trước ngày 16/11/2018</strong>. Ban Tổ Chức sẽ hoàn lại trọn số tiền quý vị đã đóng.
                 <br> Mọi khiếu nại từ ngày <strong>16/11/2018 </strong> trở đi sẽ không được cứu xét.
             </li>
 

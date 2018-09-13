@@ -33,7 +33,9 @@
 			IFNULL((SELECT SUM(P.PaidAmount) FROM Payment P WHERE P.MainContactId = M.MainContactId), 0 ) as TotalPaid		
 			FROM MainContact M 
 			WHERE M.GroupLeaderMainContactId IS NULL
+			AND M.Cancelled = 0
 			ORDER BY M.MainContactId DESC";
+
 			$datas = $database->query($query)->fetchAll();
 	
 

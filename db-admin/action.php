@@ -231,8 +231,10 @@ error_reporting(E_ALL & ~E_NOTICE);
 		$rowsAffected = 0;
 		$ob = json_decode($json, true);
 
+			$canFeeBeZero = ($ob['Age'] < 6 && $ob['FamilyDiscount'] == "2nd child 5yo or under");
+
 			//update registrant
-			if ($id > 0 && $ob['Fee'] > 0) {
+			if ($id > 0 && ($ob['Fee'] > 0 || $canFeeBeZero)) {
 
 				//create a calculator objcet
 				$calculator = new FeeCalculator();

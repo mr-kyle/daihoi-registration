@@ -73,7 +73,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 
 
 	$query = "SELECT  (SELECT COUNT(M.MainContactId) FROM MainContact M WHERE M.Cancelled = 0) TotalAttendance, 
-	(SELECT SUM(P.PaidAmount) FROM Payment P) TotalPaid,
+	(SELECT SUM(P.PaidAmount) FROM Payment P INNER JOIN MainContact M ON M.MainContactId = P.MainContactId WHERE M.Cancelled = 0) TotalPaid,
 	(SELECT SUM(M.Fee) FROM MainContact M WHERE M.Cancelled = 0) TotalFees,
 	(SELECT COUNT(*) FROM MainContact M INNER JOIN RoomAllocation A ON A.MainContactId = M.MainContactId WHERE M.Cancelled = 0) RoomAllocatedTotal,
 	(SELECT COUNT(*) FROM MainContact M WHERE M.Cancelled = 0 AND M.CheckedIn = 1) CheckedInTotal;";
@@ -102,7 +102,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 					  </div>', 
 		$datas[0]["TotalAttendance"], 
 		money_format('%#0n', $datas[0]["TotalPaid"]), 
-		money_format('%#0n', $datas[0]["TotalFees"]), 
+		money_format('%#0n', $datas[0]["TotalFees"] - $datas[0]["TotalPaid"]), 
 		$transfers[0]["AirportTransferTotal"],
 		$datas[0]["RoomAllocatedTotal"],
 		$datas[0]["CheckedInTotal"]

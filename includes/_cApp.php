@@ -4,7 +4,7 @@
     {
         public static $CONFERENCE_YEAR = '2018';
         public static $SITE_URL = 'https://www.christianconference.org.au';
-        public static $EARLY_BIRD = true;
+        public static $EARLY_BIRD = false;
 
         public static $DB_NAME      = 'daihoi2018'; //'vecamel1_daihoi';
         public static $DB_USERNAME  = 'root'; //'vecamel1_daihoi';

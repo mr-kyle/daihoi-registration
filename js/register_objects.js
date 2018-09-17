@@ -1,5 +1,5 @@
     
-    const EARLY_BIRD_DISCOUNT = true; //normal registration 
+    const EARLY_BIRD_DISCOUNT = false; //normal registration 
     
     var REGO = function () {
         this.Firstname       = '',

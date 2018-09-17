@@ -653,6 +653,8 @@
 
 				$State 			 = $this->State;
 
+				$EarlyBirdSpecialInt = ($this->EarlyBirdSpecial ? 1 : 0);
+
 				if (!$stmt->bind_param("sssssssssssssssss", $FullName, 
 															$Age, 
 															$Church, 
@@ -668,7 +670,7 @@
 															$Firstname,
 															$Surname, 
 															$Pensioner,
-															$EarlyBirdSpecial,
+															$EarlyBirdSpecialInt,
 															$State)) {												
 
 				    $this->logError( "Binding parameters failed MainContact: (" . $stmt->errno . ")<br />  " . $stmt->error );

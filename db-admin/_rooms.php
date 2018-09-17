@@ -12,8 +12,6 @@
     $database = null
     //new
     function RoomUltility() {
-
-     // $this->EarlyBirdSpecial = AppConfig::isEarlyBird();
      $database = createDb();
     }
 

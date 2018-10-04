@@ -77,7 +77,7 @@ error_reporting(E_ALL & ~E_NOTICE);
       </div>    	
       <div class="medium-6 columns"> 
     	 		<label>Church</label>
-      		<select id="ddlChurch" <?php echo ($IsMainContact) ? '' :  'disabled="disabled"' ?> <?php echo $IsDisabledHtml; ?> >
+      		<select id="ddlChurch"> <?php echo $IsDisabledHtml; ?> >
       			<?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/_churches.php');?>
       		</select>
           <input type="hidden" id="tChurchHidden" value="<?php echo $row["Church"]; ?>" />
@@ -469,7 +469,7 @@ error_reporting(E_ALL & ~E_NOTICE);
           r.Cancelled        = document.getElementById("cbCancelled").checked;
           r.Pensioner        = document.getElementById("cbPensioner").checked;
           r.EarlyBirdSpecial = document.getElementById("cbEarlyBird").checked;
-
+          r.Church           = $("#ddlChurch").val();
 	        $("#json").html(JSON.stringify(r)).show();
 
 	        sendUpdateData(JSON.stringify(r), <?php echo ($MainContactId == "") ? 0 : $MainContactId ; ?>, "update-registrant");

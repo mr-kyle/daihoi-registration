@@ -277,6 +277,7 @@ error_reporting(E_ALL & ~E_NOTICE);
 						"Cancelled"        => $ob['Cancelled'],
 						"Pensioner"        => $ob['Pensioner'],
 						"EarlyBirdSpecial" => $ob['EarlyBirdSpecial'],
+						"Church" 		   => $ob['Church'],
 						], [
 						"MainContactId"     => $id
 						]);

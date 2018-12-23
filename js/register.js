@@ -510,8 +510,9 @@
     function getSummary() {
 
 
+
         $.ajax({
-            url: 'summary_template.php',
+            url: '/register/summary_template.php',
             type: 'GET',
             dataType: 'html',
             data: { cache: Math.random() },

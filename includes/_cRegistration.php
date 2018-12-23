@@ -1461,12 +1461,15 @@
 	    }
 
 
-		function processRegoSubmission(){
-				/*
-				$out = new OUTPUTj(0,"","Registration currently not available");
-				echo $out->toJSON();
-				return false;
-				*/
+		function processRegoSubmission($adminRego = false){
+				
+				//process this part if its only admin rego
+				if (!$adminRego){
+					//close registration		
+					$out = new OUTPUTj(0,"","Registration currently not available, pleaes contact registration team.");
+					echo $out->toJSON();
+					return false;
+				}
 
 				$json = $_POST["json"];
 

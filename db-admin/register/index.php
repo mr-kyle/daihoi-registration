@@ -33,214 +33,10 @@
 
         <div>
 
-            <h1>Registration</h1>
-
-
-            <div>&nbsp;</div>
-
-            <div class="panel panel-info border-none">
-                <div class="panel-heading">Important Information</div>
-
-                <div class="panel-body">
-
-                    <div class="col-lg-10 col-lg-offset-1 ">
-
-                        <div class="row">
-
-                            <div class="col-md-6 ">
-
-                                <h4><i class="fa fa-plane text-info"> </i> Airport transfers </h4>
-                                There is bus transfer services from Melbourne Airport to the Conference and vice versa.
-                                <br>Please select Airport Transfer when you register.
-                                <div>&nbsp;</div>
-
-                            </div>
-
-                            <div class="col-md-6">
-                                <h4><i class="fa fa-wheelchair text-info"> </i> Disabilities </h4>
-                                <p>
-                                    People with special needs will need to ensure that your requirements are known at the time of registration.
-                                </p>
-                                <div>&nbsp;</div>
-                            </div>
-                        </div>
+            <h1 id="fee-structure-end">Registration (Administrators)</h1>
 
 
 
-                        <div class="clearfix">&nbsp;</div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <h4><i class="fa fa-cutlery text-info"> </i> Food </h4>
-                                <p>
-                                    Vietnamese cuisine will be the main dishes provided at the Melbourne 2018 conference.
-                                    Special dietary requirements must be made known at the time of registration – we cannot guarantee all different dietary needs can be met.
-                                </p>
-                                <div>&nbsp;</div>
-
-                            </div>
-
-
-                            <div class="col-md-6">
-                                <h4><i class="fa fa-bank  text-info"> </i> Payment </h4>
-                                <p>
-                                    Payment is to be made to the below account.
-                                    <?php include($_SERVER['DOCUMENT_ROOT'] . '/includes/_bankdetails.php');?>
-                                </p>
-                                <div>&nbsp;</div>
-                            </div>
-
-                            <div class="col-sm-6">
-                                <h4><i class="fa fa-envelope text-info"> </i> Correspondence address</h4>
-                                <p>
-                                    PO Box 2114, Footscray VIC 3011, Australia.<br>
-                                    <b>website:</b> christianconference.org.au<br>
-                                    <b>email:</b> info@christianconference.org.au
-                                    
-                                </p>
-                                <div>&nbsp;</div>
-                            </div>                            
-
-
-                        </div>
-
-                        <div class="clearfix">&nbsp;</div>
-
-                    </div>
-                    <div class="col-lg-1"></div>
-
-                </div>
-
-
-
-            </div>
-
-
-            <div>&nbsp;</div>
-            <div>&nbsp;</div>
-
-
-            <div class="panel panel-info border-none">
-
-                <div class="panel-heading">Fee Structure</div>
-
-                <div class="panel-body">
-
-                    <p>All prices are in AUD unless otherwise specified.</p>
-
-
-                    <div class="row">
-
-                        <div class="col-md-4 col-lg-4">
-
-                            <div class="well well-offset-color white-bg">
-                                <table class="table">
-                                    <caption>Standard Fee</caption>
-                                    <thead>
-                                        <tr>
-                                            <th>Age</th>
-                                            <th class="standard-price">Price</th>
-                                            <th class="text-right early-bird">Early Bird<br><span style="font-size:1rem">payment made before 15/09/2018</span></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>5 and under (shared bed with parents)</td>
-                                            <td class="standard-price">$50</td>
-                                            <td class="text-right early-bird">$30</td>
-                                        </tr>
-                                        <tr>
-                                            <td>6 - 12</td>
-                                            <td class="standard-price">$350</td>
-                                            <td class="text-right early-bird">$330</td>
-                                        </tr>
-                                        <tr>
-                                            <td>13 - 64</td>
-                                            <td class="standard-price">$450</td>
-                                            <td class="text-right early-bird">$430</td>
-                                        </tr>
-                                        <tr>
-                                            <td>65 and above or Pensioner</td>
-                                            <td class="standard-price">$400</td>
-                                            <td class="text-right early-bird">$380</td>
-                                        </tr>
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-
-                        </div>
-
-
-                        <div class="col-md-4 col-lg-4">
-
-                            <div class="well well-offset-color white-bg">
-
-                                <table class="table  ">
-
-                                    <caption>Family Discount</caption>
-                                    <tbody>
-
-                                        <tr>
-                                            <td colspan="2">
-                                                Family with 2 parents & 2 or more children gets family discount.
-                                                First oldest child full fee according to standard fee
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td class="text-bold text-right">Eligibility</td>
-                                            <td class="standard-price text-bold text-right">Discount</td>
-                                        </tr>                                        
-                                        <tr>
-                                            <td>2nd child thereafter 5 y.o or under</td>
-                                            <td class="standard-price text-right">Free</td>
-                                        </tr>
-                                        <tr>
-
-                                            <td>2nd child thereafter 6 y.o and above<br>
-                                                ($100 off from Standard Fee)
-                                            </td>
-                                            <td class="standard-price text-right">$100 off</td>
-                                        </tr>
-
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-
-
-                        </div>
-
-
-
-                        <div class="col-md-4 col-lg-4">
-
-                            <div class="well well-offset-color white-bg">
-
-                                <table class="table">
-                                    <caption>Transport</caption>
-                                    <tbody>
-                                        <tr>
-                                            <td>
-                                                <?php include($_SERVER["DOCUMENT_ROOT"] . "/includes/_airport-info.php");?>
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
-
-                </div>
-
-                <div id="fee-structure-end"></div>
-            </div>
 
 
             <div class="row" id="rego-summary">
@@ -253,24 +49,7 @@
             </div>
 
 
-                <div>&nbsp;</div>
-                <div>&nbsp;</div>
-
-    
-                <div class="panel panel-info  border-none">
-
-                    <div class="panel-heading">Registration Form</div>
-                    <div class="panel-body" style="padding:24px">
-
-                            We are no longer accepting online registrations. Please contact the registration team on: <strong>info@christianconference.org.au</strong>
-
-                        </div>
-                    </div>
-
-
-
-
-            <form id="rego-form" onsubmit="return false;" style="display: none">
+            <form id="rego-form" onsubmit="return false;">
 
                 <div class="panel panel-info  border-none">
 
@@ -844,11 +623,6 @@
     <script src="/js/register.js?v=13.<?php echo rand() ?>"></script>
     <script src="/register/submission.js?v=5.<?php echo rand() ?>"></script>
 
-    <!-- shepherd -->
-    <link href="shepherd-theme-arrows.css"  rel="stylesheet" type="text/css" />
-    <link href="shepherd-helper.css"        rel="stylesheet" type="text/css" />
-    <script src="tether.min.js"></script>
-    <script src="shepherd.min.js"></script>
 
 </body>
 

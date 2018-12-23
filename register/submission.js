@@ -10,7 +10,7 @@ var SUBMISSION =  {
             var rego = collectRegistrantInfo(false);
 
             $.ajax({
-                url: '/register/process/?process=1',
+                url: 'process/?process=1',
                 type: 'POST',
                 dataType: 'html',
                 data: { reference: "test", json: JSON.stringify(rego), cache: Math.random() },

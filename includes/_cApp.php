@@ -17,7 +17,7 @@
         public static $TINYURL_VIEW = 'https://tinyurl.com/y92xge86';
 
 
-        public static $DEFAULT_EMAIL_ADDRESS = 'registration@christianconference.org.au';
+        public static $DEFAULT_EMAIL_ADDRESS = 'info@christianconference.org.au';
 
 
         public static $APP_NAME = 'Dai Hoi 2018';
